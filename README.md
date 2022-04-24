@@ -37,7 +37,7 @@ while KinovaIBVS_VR is with Oculus devices (under Windows).
 The ROS backend is responsible for receiving messages conveyed from Unity side such as *the 2D image position/velocity of Goal and TCP (Tool-Center-Point)*, *obstacle area*, etc. which are captured by camera attached to Kinova Camera Arm.
 It would then utilize an optimization method to give out the desired joints velocity of Camera Arm based on IBVS algorithm and send back to Unity to make it move accordingly. Subject could manipulate one robotic arm while another moves to provide view in real-time, which realized Shared-Autonomy Control. 
 
-> To know more about Unity ROS mechanism, you may refer [ROS-Unity-Integration ](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/ros_unity_integration/README.md) for further details.
+> Note: To know more about Unity ROS mechanism, you may refer [ROS-Unity-Integration ](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/ros_unity_integration/README.md) for further details.
 
 ---
 
