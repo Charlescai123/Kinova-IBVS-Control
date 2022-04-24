@@ -96,7 +96,7 @@ sure the Oculus and OpenVR Loader two items are ticked in Unity Project Settings
 
 <img src="Image/OS Version/Windows/tick.png"/>
 
-You can follow the [guidance online]("https://www.tomsguide.com/how-to/how-to-connect-oculus-quest-2-to-a-pc") to connect your Oculus Headset with PC via cable, and start the SteamVR afterwards. Once you get this status in SteamVR, you're ready for launching the program with Oculus.
+You can follow the [guidance online](https://www.tomsguide.com/how-to/how-to-connect-oculus-quest-2-to-a-pc) to connect your Oculus Headset with PC via cable, and start the SteamVR afterwards. Once you get this status in SteamVR, you're ready for launching the program with Oculus.
 
 <img src="Image/Oculus/SteamVR.png" width="360"/>
 
