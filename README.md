@@ -120,9 +120,13 @@ After all things done, open *Scene -> KinovaIBVS_VR* to play.
 
 ## Runtime
 
-After clicking the **Play** button, you will find two robotics arm will start to reach their initial position from their home configurations.
+After clicking the **Play** button, you will observe that two robotics arm would start to reach their initial position from their home configurations.
 
 <p align="center"><img src="Image/Unity/startup.gif"/></p>
 
+Once you press keyboard **P** to enable ROS message transmission, the Camera Arm would move according to the goal object and TCP so that
+they will be in the predefined positions in 2D image to realize Image-based Visual Servoing control.
+
+<p align="center"><img src="Image/Unity/start_state.gif"/></p>
 
 ---
