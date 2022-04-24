@@ -64,7 +64,9 @@ One is ubuntu with ROS installed and another is tested under Windows 10 with WSL
 
 First you must make the right settings in Unity to connect ROS on startup and set *ROS IP Address* to 127.0.0.1 as well as *ROS Port* to 10001
 
-<img src="Image/Unity/ROS Connection.png"/>
+<img src="Image/Unity/ROS Settings.png"/>
+
+<img src="Image/Unity/ROS Connection.png" width="320"/>
 
 Then you need to compile and launch ROS package by
 
