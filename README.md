@@ -46,11 +46,11 @@ It would then utilize an optimization method to give out the desired joints velo
 We use matlab optimization toolbox as the optimizer where you need to generate module *matlab engine* to interact with Matlab in Python script.
 To install it, you need to first change directory by
 
-> cd $MATLABROOT/extern/engines/python
+> $ cd $MATLABROOT/extern/engines/python
 
 where *MATLABROOT* is the root directory of matlab installed, and use the command to install it where *INSTALL_DIR* is the directory to save python package. (Usually it is */usr/lib/python3/dist-packages*)
 
-> python setup.py install --prefix="$INSTALL_DIR"
+> $ python setup.py install --prefix="$INSTALL_DIR"
 
 Finally, if you can import matlab without errors, it means your python interpreter could find the module path, and the generation is successful.
 
@@ -61,6 +61,17 @@ Finally, if you can import matlab without errors, it means your python interpret
 Before running the program, please first install these two packages [Oculus-Integration](https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022) and [SteamVR Plugin](https://assetstore.unity.com/packages/tools/integration/steamvr-plugin-32647) in Unity Asset Store so that you won't get any compiling errors. 
 In order to simulate remote control scene in reality, we have introduced the VR HMD (Head Mounted Device) [Oculus Quest 2](https://www.oculus.com/quest-2/) where the hardware of VR headset only supports Windows. So there're actually two OS versions we support.
 One is ubuntu with ROS installed and another is tested under Windows 10 with WSL (Windows Subsystem for Linux). Both version all need MATLAB installed.
+
+First you must make the right settings in Unity to connect ROS on startup and set *ROS IP Address* to 127.0.0.1 as well as *ROS Port* to 10001
+
+<img src="Image/Unity/ROS Connection.png"/>
+
+Then you need to compile and launch ROS package by
+
+> $ cd Kinova-IBVS-Control/ROS/ \
+> $ catkin_make \
+> $ source devel/setup.bash \
+> $ roslaunch ibvs_control ibvs.launch
 
 ---
 
@@ -76,7 +87,7 @@ sure the Oculus and OpenVR Loader two items not ticked in Unity Project Settings
 
 <img src="Image/OS Version/Linux/untick.png"/>
 
-For generating the Matlab engine python module to be used in ROS backend, you may follow the [instructions](#matlab-engine) step by step.
+For generating the Matlab engine python module to be used in ROS backend, you may follow the [instructions](#matlab-engine).
 After all things done, open *Scene -> KinovaIBVS* to play.
 
 ---
