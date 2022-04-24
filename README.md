@@ -1,5 +1,3 @@
-<p align="center"><img src="img/0_pick_place.gif"/></p>
-
 # IBVS (Image-based Visual Servoing Control)
 
 ![ROS](https://img.shields.io/badge/ROS-melodic-yellowgreen)
@@ -15,11 +13,11 @@ This project is about visual servoing based on the main reference paper [Occlusi
 Visual servoing could be used in many teleoperation scenarios for remote control where the subject needs to manipulate one robot arm
 while another moves correspondently in an autonomous way to provide FOV (Field of View) for observing the obstacle/object.
 
-## Applications
+## Kinova Models
 
 We carefully design the scenario in Unity using two [Kinova-Gen3-6-Dof](https://www.kinovarobotics.com/product/gen3-robots) robot arms
-with one getting equipped with the [Robotiq 2F-85](https://robotiq.com/products/2f85-140-adaptive-robot-gripper) gripper naming *Manipulator Arm* while another attached an eye-in-hand camera naming *Camera Arm*.
-The model and DH parameters are shown as follows <img src="Image/Kinova Model.png" width="400"/>
+with one equipped the [Robotiq 2F-85](https://robotiq.com/products/2f85-140-adaptive-robot-gripper) gripper naming *Manipulator Arm* while another attached an eye-in-hand camera naming *Camera Arm*.
+The model and DH parameters are defined as follows <p align="center"><img src="Image/Kinova Model.png" width="720"/></p>
 
 ## Architecture
 
