@@ -17,7 +17,11 @@ while another moves correspondently in an autonomous way to provide FOV (Field o
 
 We carefully design the scenario in Unity using two [Kinova-Gen3-6-Dof](https://www.kinovarobotics.com/product/gen3-robots) robot arms
 with one equipped the [Robotiq 2F-85](https://robotiq.com/products/2f85-140-adaptive-robot-gripper) gripper naming *Manipulator Arm* while another attached an eye-in-hand camera naming *Camera Arm*.
+<<<<<<< HEAD
 The model and DH parameters are defined as follows <p align="center"><img src="Image/Kinova Model/Kinova Model.png" width="720"/></p>
+=======
+The model and DH parameters are defined as follows <p align="center"><img src="Image/Kinova Model.png" width="720"/></p>
+>>>>>>> f7c954607e4542b640012545d6d237bb2aa7ca3e
 
 ## Architecture
 
@@ -96,3 +100,30 @@ This repository provides project files for the pick-and-place tutorial, includin
 <img src="img/0_docker.png" width="400"/>
 
 This part provides two options for setting up your ROS workspace: using Docker, or manually setting up a catkin workspace.
+<<<<<<< HEAD
+=======
+
+## [Part 1: Create Unity scene with imported URDF](1_urdf.md)
+
+<img src="img/1_end.gif" width="400"/>
+
+This part includes downloading and installing the Unity Editor, setting up a basic Unity scene, and importing a robot--the [Niryo One](https://niryo.com/niryo-one/)--using the URDF Importer.
+
+## [Part 2: ROS–Unity Integration](2_ros_tcp.md)
+
+<img src="img/2_echo.png" width="400"/>
+
+This part covers creating a TCP connection between Unity and ROS, generating C# scripts from a ROS msg and srv files, and publishing to a ROS topic.
+
+## [Part 3: Pick-and-Place In Unity](3_pick_and_place.md)
+
+<img src="img/0_pick_place.gif" width="400"/>
+
+This part includes the preparation and setup necessary to run a pick-and-place task with known poses using MoveIt. Steps covered include creating and invoking a motion planning service in ROS, moving a Unity Articulation Body based on a calculated trajectory, and controlling a gripping tool to successfully grasp and drop an object.
+
+## [Part 4: Pick-and-Place on the Real Robot](4_pick_and_place.md)
+
+<img src="img/4_pick_and_place.gif" width="400"/>
+
+This part is going to be a little different than the previous tutorials in that it will utilize a real Niryo One robot. We do not assume that everyone has access to a Niryo One outside of simulation. As such this tutorial should mostly be used as a reference for how to move from executing commands on a simulated robot to a real one.
+>>>>>>> f7c954607e4542b640012545d6d237bb2aa7ca3e
