@@ -46,11 +46,11 @@ It would then utilize an optimization method to give out the desired joints velo
 We use matlab optimization toolbox as the optimizer where you need to generate module *matlab engine* to interact with Matlab in Python script.
 To install it, you need to first change directory by
 
-> cd $matlabroot/extern/engines/python
+> cd $MATLABROOT/extern/engines/python
 
-where *matlabroot* is the root directory of matlab installed, and use the command to install it where *install_dir* is the directory to save python package. (Usually it is */usr/lib/python3/dist-packages*)
+where *MATLABROOT* is the root directory of matlab installed, and use the command to install it where *INSTALL_DIR* is the directory to save python package. (Usually it is */usr/lib/python3/dist-packages*)
 
-> python setup.py install --prefix="$install_dir"
+> python setup.py install --prefix="$INSTALL_DIR"
 
 Finally, if you can import matlab without errors, it means your python interpreter could find the module path, and the generation is successful.
 
@@ -102,9 +102,5 @@ You can follow the [guidance online]("https://www.tomsguide.com/how-to/how-to-co
 
 > Note: Please get noticed that you have to install the Matlab in WSL meaning the Matlab version is of Linux instead of Windows because 
 > we have to use ROS in Python interpreter where ROS could only be compiled under Linux rather than Windows.
-
----
-
-### Matlab Engine Module Generation
 
 ---
