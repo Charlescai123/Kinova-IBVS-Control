@@ -11,6 +11,8 @@
     "com.unity.timeline": "1.4.8",
     "com.unity.toolchain.win-x86_64-linux-x86_64": "2.0.0",
     "com.unity.ugui": "1.0.0",
+    "com.unity.xr.magicleap": "6.2.2",
+    "com.unity.xr.oculus": "1.10.0",
     "com.valvesoftware.unity.openvr": "file:../Assets/SteamVR/OpenVRUnityXRPackage/Editor/com.valvesoftware.unity.openvr-1.1.4.tgz",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
