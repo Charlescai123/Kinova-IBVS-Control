@@ -9,16 +9,22 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
+/[Pp]rojectSettings/
 /[Aa]ssets/[Rr]os[Mm]essages/
 /[Aa]ssets/[Rr]os[Mm]essages.meta
 
 
 # Ignore VR SDKs
 /[Aa]ssets/Oculus/
+/[Aa]ssets/Oculus.meta
 /[Aa]ssets/SteamVR/
+/[Aa]ssets/SteamVR.meta
 /[Aa]ssets/SteamVR_Resources/
+/[Aa]ssets/SteamVR_Resources.meta
 /[Aa]ssets/StreamingAssets/
+/[Aa]ssets/StreamingAssets.meta
 /[Aa]ssets/XR/
+/[Aa]ssets/XR.meta
 
 
 # MemoryCaptures can get excessive in size.
@@ -36,6 +42,7 @@
 
 # Visual Studio cache directory
 .vs/
+.vsconfig
 
 # Gradle cache directory
 .gradle/
