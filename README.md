@@ -76,7 +76,7 @@ sure the Oculus and OpenVR Loader two items not ticked in Unity Project Settings
 
 <img src="Image/OS Version/Linux/untick.png"/>
 
-For generating the Matlab engine python module to be used in ROS backend, you may follow the instructions step by step.
+For generating the Matlab engine python module to be used in ROS backend, you may follow the [instructions](#matlab-engine) step by step.
 After all things done, open *Scene -> KinovaIBVS* to play.
 
 ---
@@ -91,7 +91,7 @@ After all things done, open *Scene -> KinovaIBVS* to play.
 - OculusClient
 - Unity 20.3+
 
-Make sure you have got WSL (together with ROS, Matlab and Python) installed under your Windows system. In order to use Oculus as the VR devices, on the contrary of what you need to do in Linux, you have to ensure
+Make sure you have got WSL (together with ROS, [Matlab](#matlab-engine) and Python) installed under your Windows system. In order to use Oculus as the VR devices, on the contrary of what you need to do in Linux, you have to ensure
 sure the Oculus and OpenVR Loader two items are ticked in Unity Project Settings. After all things done, open *Scene -> KinovaIBVS_VR* to play.
 
 <img src="Image/OS Version/Windows/tick.png"/>
