@@ -15,9 +15,6 @@ public class KinovaTeleoperator : MonoBehaviour
 
     // Hardcoded variables
     const int k_NumRobotJoints = 6;
-    const float k_JointAssignmentWait = 0.1f;
-    const float k_PoseAssignmentWait = 0.5f;
-    string m_RosServiceName = "kinova_controller";
 
     // Articulation Bodies
     ArticulationBody[] MAJointArtiBodies;
@@ -125,12 +122,6 @@ public class KinovaTeleoperator : MonoBehaviour
             }
             //AllJointGo(MAJointArtiBodies, newJoints);
         }
-
-        //if (OVRInput.GetUp(OVRInput.Button.PrimaryIndexTrigger))
-        //{
-        //    // Do something
-        //    Debug.Log("asjdklasjkldjaskldjaskldjklasjdklasjdklasjdklasjdklasjkdlaskdjaskldjaskldjkl1j2io");
-        //}
     }
 
     private void LateUpdate()
@@ -140,19 +131,6 @@ public class KinovaTeleoperator : MonoBehaviour
         {
             MAJointController.HomeJoints();
         }
-
-        //if (pos != new Vector3(0f, 0f, 0f) && origin)
-        //{
-        //    startOrigin = pos;
-        //    origin = false;
-        //}
-
-        //if (pos == startOrigin || pos == new Vector3(0f, 0f, 0f))
-        //{
-        //    Debug.Log("Controller Out of Range!!!");
-        //    TeleoperationOn = false;
-        //    return;
-        //}
 
         //lastPosition = pos;
 
@@ -172,7 +150,7 @@ public class KinovaTeleoperator : MonoBehaviour
 
         if (TeleoperationOn)
         {
-            KinovaJointControl();
+            KinovaJointPosControl();
         }
     }
     public void AllJointGo(ArticulationBody[] articulationbody, float[] q)
@@ -186,7 +164,51 @@ public class KinovaTeleoperator : MonoBehaviour
         }
     }
 
-    private void KinovaJointControl()
+    private void KinovaJointPosControl()
+    {
+        var vel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RHand);
+        var pos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand);
+        // Index to next Joint
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            index = ((index + 1) + k_NumRobotJoints) % k_NumRobotJoints;
+            Highlight(MAJointArtiBodies, index);
+        }
+        // Index to last Joint
+        else if (OVRInput.GetDown(OVRInput.Button.Two))
+        {
+            index = ((index - 1) + k_NumRobotJoints) % k_NumRobotJoints;
+            Highlight(MAJointArtiBodies, index);
+        }
+
+        var deltaPos = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
+
+        // Open/Close Gripper
+        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+        {
+            if (!IsGripperOpen)
+                ManipulatorGripper.OpenGrippers();
+            else
+                ManipulatorGripper.CloseGrippers();
+            // Reverse the Gripper State Flag
+            IsGripperOpen ^= true;
+        }
+
+        Debug.Log("Teleoperating!!!");
+        var p = MAJointArtiBodies[index].xDrive.target * Mathf.Deg2Rad;
+        p += deltaPos.x * 0.005f;
+
+        MAJointController.SetJointTarget(MAJointArtiBodies[index], p);
+        //var jointVel = Math.Sqrt(Math.Pow(vel.x, 2) + Math.Pow(vel.y, 2) + Math.Pow(vel.z, 2));
+
+        //Debug.Log("vel of xDrive is:" + jointVel.ToString("f4"));
+        //jointXDrive.targetVelocity = (float)jointVel * 1000;
+
+        Debug.Log("joint velocity is:" + MAJointArtiBodies[index].velocity.ToString("f4"));
+        //lastPositionForCalc = pos;
+    }
+
+    private void KinovaJointVelControl()
     {
         var vel = OVRInput.GetLocalControllerVelocity(OVRInput.Controller.RHand);
         var pos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RHand);

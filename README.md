@@ -105,15 +105,23 @@ After all things done, open *Scene -> KinovaIBVS* to play.
 - Unity 20.3+
 
 Make sure you have got WSL (together with ROS, [Matlab](#matlab-engine) and Python) installed under your Windows system. In order to use Oculus as the VR devices, on the contrary of what you need to do in Linux, you have to ensure
-sure the Oculus and OpenVR Loader two items are ticked in Unity Project Settings. After all things done, open *Scene -> KinovaIBVS_VR* to play.
+sure the Oculus and OpenVR Loader two items are ticked in Unity Project Settings.
 
 <img src="Image/OS Version/Windows/tick.png"/>
 
-You can follow the [guidance online](https://www.tomsguide.com/how-to/how-to-connect-oculus-quest-2-to-a-pc) to connect your Oculus Headset with PC via cable, and start the SteamVR afterwards. Once you get this status in SteamVR, you're ready for launching the program with Oculus.
+You then need to wear the VR device where you can follow the [guidance online](https://www.tomsguide.com/how-to/how-to-connect-oculus-quest-2-to-a-pc) to connect your Oculus Headset with PC via cable, and start the SteamVR afterwards. Once you get this status in SteamVR, you're ready for launching the program with Oculus.
 
 <img src="Image/Oculus/SteamVR.png" width="360"/>
 
 > Note: Please get noticed that you have to install the Matlab in WSL meaning the Matlab version is of Linux instead of Windows because 
 > we have to use ROS in Python interpreter where ROS could only be compiled under Linux rather than Windows.
+
+After all things done, open *Scene -> KinovaIBVS_VR* to play.
+
+## Runtime
+
+After clicking *Play* button, you will find two robotics arm will start to reach their initial position from the home configuration
+
+<img src="Image/Unity/startup.gif"/>
 
 ---

@@ -2519,10 +2519,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398428ed06873fa48829dadde88c9307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TopicName: /niryo_joints
-  m_NiryoOne: {fileID: 0}
-  m_Target: {fileID: 0}
-  m_TargetPlacement: {fileID: 0}
 --- !u!114 &288009368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2535,10 +2531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ee6148794b60049875fb9f533a6387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  KinovaManipulatorArm: {fileID: 225569709}
-  KinovaCameraArm: {fileID: 81509804}
-  testObj: {fileID: 0}
-  SBWY: {fileID: 0}
 --- !u!1 &309130535 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7746134005309899461, guid: b449bb8dca0628e43b2462e2bf0133c9, type: 3}
@@ -12879,7 +12871,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1676391028
 BoxCollider:
   m_ObjectHideFlags: 0
