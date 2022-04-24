@@ -1,0 +1,17 @@
+std_msgs/Float64[] qc               # 6
+std_msgs/Float64[] dqc              # 6
+std_msgs/Float64[] qt               # 6
+std_msgs/Float64[] dqt              # 6
+
+PointOnImg pt                       # tool com
+PointOnImg pg                       # goal com
+PointOnImg po                       # occlusion com
+
+std_msgs/Float64 area_g
+std_msgs/Float64 area_o
+
+PointOnImg[] ps               # n 
+
+---
+
+std_msgs/Float64[] dqc_next         # 6
