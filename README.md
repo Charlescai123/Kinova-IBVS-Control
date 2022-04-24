@@ -120,8 +120,9 @@ After all things done, open *Scene -> KinovaIBVS_VR* to play.
 
 ## Runtime
 
-After clicking *Play* button, you will find two robotics arm will start to reach their initial position from the home configuration
+After clicking the **Play** button, you will find two robotics arm will start to reach their initial position from their home configurations.
 
-<img src="Image/Unity/startup.gif"/>
+<p align="center"><img src="Image/Unity/startup.gif"/></p>
+
 
 ---
