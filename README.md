@@ -23,8 +23,43 @@ with one equipped the [Robotiq 2F-85](https://robotiq.com/products/2f85-140-adap
 Basically, our designed IBVS Control System contains three parts which are the **Unity side** (Remote scene telepresence), **ROS Backend** (Receive arm/object msg and send back the control command) and **Matlab** (Optimizer) 
 The overall architecture/pipeline looks like.
 
-## Supporting OS
-In order to simulate remote control scene in reality, we have introduced the VR HMD (Head Mounted Device) [Oculus Quest 2](https://www.oculus.com/quest-2/) where the program runs on Windows. So there're actually two OS versions we support.
+---
+
+### Unity Scene
+
+We have created two scenes by two Kinova 6-Dof Arms in Unity where KinovaIBVS is designed for performing without VR HMD (under Linux)
+while KinovaIBVS_VR is with Oculus devices (under Windows).
+
+--- 
+
+### ROS Backend
+
+The ROS backend is responsible for receiving messages conveyed from Unity side such as *the 2D image position/velocity of Goal and TCP (Tool-Center-Point)*, *obstacle area*, etc. which are captured by camera attached to Kinova Camera Arm.
+It would then utilize an optimization method to give out the desired joints velocity of Camera Arm based on IBVS algorithm and send back to Unity to make it move accordingly. Subject could manipulate one robotic arm while another moves to provide view in real-time, which realized Shared-Autonomy Control. 
+
+> To know more about Unity ROS mechanism, you may refer [ROS-Unity-Integration ](https://github.com/Unity-Technologies/Unity-Robotics-Hub/blob/main/tutorials/ros_unity_integration/README.md) for further details.
+
+---
+
+### Matlab Engine 
+
+We use matlab optimization toolbox as the optimizer where you need to generate module *matlab engine* to interact with Matlab in Python script.
+To install it, you need to first change directory by
+
+> cd $matlabroot/extern/engines/python
+
+where *matlabroot* is the root directory of matlab installed, and use the command to install it where *install_dir* is the directory to save python package. (Usually it is */usr/lib/python3/dist-packages*)
+
+> python setup.py install --prefix="$install_dir"
+
+Finally, if you can import matlab without errors, it means your python interpreter could find the module path, and the generation is successful.
+
+---
+
+## Setup
+
+Before running the program, please first install these two packages [Oculus-Integration](https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022) and [SteamVR Plugin](https://assetstore.unity.com/packages/tools/integration/steamvr-plugin-32647) in Unity Asset Store so that you won't get any compiling errors. 
+In order to simulate remote control scene in reality, we have introduced the VR HMD (Head Mounted Device) [Oculus Quest 2](https://www.oculus.com/quest-2/) where the hardware of VR headset only supports Windows. So there're actually two OS versions we support.
 One is ubuntu with ROS installed and another is tested under Windows 10 with WSL (Windows Subsystem for Linux). Both version all need MATLAB installed.
 
 ---
@@ -42,6 +77,7 @@ sure the Oculus and OpenVR Loader two items not ticked in Unity Project Settings
 <img src="Image/OS Version/Linux/untick.png"/>
 
 For generating the Matlab engine python module to be used in ROS backend, you may follow the instructions step by step.
+After all things done, open *Scene -> KinovaIBVS* to play.
 
 ---
 
@@ -56,7 +92,7 @@ For generating the Matlab engine python module to be used in ROS backend, you ma
 - Unity 20.3+
 
 Make sure you have got WSL (together with ROS, Matlab and Python) installed under your Windows system. In order to use Oculus as the VR devices, on the contrary of what you need to do in Linux, you have to ensure
-sure the Oculus and OpenVR Loader two items are ticked in Unity Project Settings.
+sure the Oculus and OpenVR Loader two items are ticked in Unity Project Settings. After all things done, open *Scene -> KinovaIBVS_VR* to play.
 
 <img src="Image/OS Version/Windows/tick.png"/>
 
@@ -69,3 +105,6 @@ You can follow the [guidance online]("https://www.tomsguide.com/how-to/how-to-co
 
 ---
 
+### Matlab Engine Module Generation
+
+---
