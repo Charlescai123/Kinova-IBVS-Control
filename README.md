@@ -154,6 +154,6 @@ they will be in the predefined positions in 2D image to provide better view for 
 
 You could now use Oculus controller to teleoperate the Manipulator Arm to move in order to grasp the target object, while the Camera Arm would provide autonomous control for the changing the camera position to make subject possess a clear and comfortable view. 
 
-<p align="center"><img src="Image/Unity/object_graspping.gif"/></p>
+<p align="center"><img src="Image/Unity/object_grasping.gif"/></p>
 
 ---
