@@ -16,14 +16,16 @@ while another moves correspondently in an autonomous way to provide FOV (Field o
 ## Kinova Models
 
 We carefully design the scenario in Unity using two [Kinova-Gen3-6-Dof](https://www.kinovarobotics.com/product/gen3-robots) robot arms
-with one equipped the [Robotiq 2F-85](https://robotiq.com/products/2f85-140-adaptive-robot-gripper) gripper naming *Manipulator Arm* while another attached an eye-in-hand camera naming *Camera Arm*. The model and DH parameters are defined as follows <p align="center"><img src="Image/Kinova Model/Kinova Model.png" width="720"/></p>
+with one equipped the [Robotiq 2F-85](https://robotiq.com/products/2f85-140-adaptive-robot-gripper) gripper naming *Manipulator Arm* while another attached an eye-in-hand camera naming *Camera Arm*. The model and DH parameters are defined as follows 
+
+<p align="center"><img src="Image/Kinova Model/Kinova Model.png" width="720"/></p>
 
 ## Architecture
 
 Basically, our designed IBVS Control System contains three parts which are the **Unity side** (Remote scene telepresence), **ROS Backend** (Receive arm/object msg and send back the control command) and **Matlab** (Optimizer) 
-The overall architecture/pipeline looks like
+The overall architecture/pipeline is shown as below
 
-<img src="Image/Unity/Framework.png"/>
+<p align="center"><img src="Image/Unity/Framework.png" width="720"/></p>
 
 ---
 
