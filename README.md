@@ -21,7 +21,9 @@ with one equipped the [Robotiq 2F-85](https://robotiq.com/products/2f85-140-adap
 ## Architecture
 
 Basically, our designed IBVS Control System contains three parts which are the **Unity side** (Remote scene telepresence), **ROS Backend** (Receive arm/object msg and send back the control command) and **Matlab** (Optimizer) 
-The overall architecture/pipeline looks like.
+The overall architecture/pipeline looks like
+
+<img src="Image/Unity/Framework.png"/>
 
 ---
 
