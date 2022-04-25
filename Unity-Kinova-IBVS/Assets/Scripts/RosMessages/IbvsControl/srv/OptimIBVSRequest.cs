@@ -29,8 +29,10 @@ namespace RosMessageTypes.IbvsControl
         //  occlusion com
         public Std.Float64Msg area_g;
         public Std.Float64Msg area_o;
-        public PointOnImgMsg[] ps;
-        //  n 
+        public PointOnImgMsg[] pg_seg;
+        //  4 points of goal segmentation
+        public PointOnImgMsg[] po_seg;
+        //  4 points of obstacle segmentation
 
         public OptimIBVSRequest()
         {
@@ -43,10 +45,11 @@ namespace RosMessageTypes.IbvsControl
             this.po = new PointOnImgMsg();
             this.area_g = new Std.Float64Msg();
             this.area_o = new Std.Float64Msg();
-            this.ps = new PointOnImgMsg[0];
+            this.pg_seg = new PointOnImgMsg[0];
+            this.po_seg = new PointOnImgMsg[0];
         }
 
-        public OptimIBVSRequest(Std.Float64Msg[] qc, Std.Float64Msg[] dqc, Std.Float64Msg[] qt, Std.Float64Msg[] dqt, PointOnImgMsg pt, PointOnImgMsg pg, PointOnImgMsg po, Std.Float64Msg area_g, Std.Float64Msg area_o, PointOnImgMsg[] ps)
+        public OptimIBVSRequest(Std.Float64Msg[] qc, Std.Float64Msg[] dqc, Std.Float64Msg[] qt, Std.Float64Msg[] dqt, PointOnImgMsg pt, PointOnImgMsg pg, PointOnImgMsg po, Std.Float64Msg area_g, Std.Float64Msg area_o, PointOnImgMsg[] pg_seg, PointOnImgMsg[] po_seg)
         {
             this.qc = qc;
             this.dqc = dqc;
@@ -57,7 +60,8 @@ namespace RosMessageTypes.IbvsControl
             this.po = po;
             this.area_g = area_g;
             this.area_o = area_o;
-            this.ps = ps;
+            this.pg_seg = pg_seg;
+            this.po_seg = po_seg;
         }
 
         public static OptimIBVSRequest Deserialize(MessageDeserializer deserializer) => new OptimIBVSRequest(deserializer);
@@ -73,7 +77,8 @@ namespace RosMessageTypes.IbvsControl
             this.po = PointOnImgMsg.Deserialize(deserializer);
             this.area_g = Std.Float64Msg.Deserialize(deserializer);
             this.area_o = Std.Float64Msg.Deserialize(deserializer);
-            deserializer.Read(out this.ps, PointOnImgMsg.Deserialize, deserializer.ReadLength());
+            deserializer.Read(out this.pg_seg, PointOnImgMsg.Deserialize, deserializer.ReadLength());
+            deserializer.Read(out this.po_seg, PointOnImgMsg.Deserialize, deserializer.ReadLength());
         }
 
         public override void SerializeTo(MessageSerializer serializer)
@@ -91,8 +96,10 @@ namespace RosMessageTypes.IbvsControl
             serializer.Write(this.po);
             serializer.Write(this.area_g);
             serializer.Write(this.area_o);
-            serializer.WriteLength(this.ps);
-            serializer.Write(this.ps);
+            serializer.WriteLength(this.pg_seg);
+            serializer.Write(this.pg_seg);
+            serializer.WriteLength(this.po_seg);
+            serializer.Write(this.po_seg);
         }
 
         public override string ToString()
@@ -107,7 +114,8 @@ namespace RosMessageTypes.IbvsControl
             "\npo: " + po.ToString() +
             "\narea_g: " + area_g.ToString() +
             "\narea_o: " + area_o.ToString() +
-            "\nps: " + System.String.Join(", ", ps.ToList());
+            "\npg_seg: " + System.String.Join(", ", pg_seg.ToList()) +
+            "\npo_seg: " + System.String.Join(", ", po_seg.ToList());
         }
 
 #if UNITY_EDITOR

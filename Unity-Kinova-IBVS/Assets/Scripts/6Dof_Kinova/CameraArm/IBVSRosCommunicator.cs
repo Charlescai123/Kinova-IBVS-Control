@@ -92,8 +92,8 @@ public class IBVSRosCommunicator : MonoBehaviour
         request.pg = GetImgPointInfo(camCaptor.goal.transform);         // Goal
 
         request.po = GetImgPointInfo(camCaptor.obsCenterPoint);         // Obstacle Center
-        //request.ps = GetImgSegmentInfo(camCaptor.obstacle.transform);    // Obstacle Segment
-        request.ps = GetImgSegmentInfo(camCaptor.goal.transform);    // Goal Segment
+        request.po_seg = GetImgSegmentInfo(camCaptor.obstacle.transform);  // Obstacle Segment
+        request.pg_seg = GetImgSegmentInfo(camCaptor.goal.transform);    // Goal Segment
 
         // Obstacle Area
         request.area_o = GetObsAreaSize(camCaptor.obsCornerPoints);

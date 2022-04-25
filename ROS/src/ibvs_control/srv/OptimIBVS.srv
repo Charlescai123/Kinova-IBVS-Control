@@ -10,8 +10,8 @@ PointOnImg po                       # occlusion com
 std_msgs/Float64 area_g
 std_msgs/Float64 area_o
 
-PointOnImg[] ps               # n 
-
+PointOnImg[] pg_seg               # 4 points of goal segmentation
+PointOnImg[] po_seg               # 4 points of obstacle segmentation
 ---
 
 std_msgs/Float64[] dqc_next         # 6
