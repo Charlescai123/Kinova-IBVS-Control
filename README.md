@@ -120,14 +120,24 @@ After all things done, open *Scene -> KinovaIBVS_VR* to play.
 
 ## Runtime
 
+### Configuration Initialization
+
 After clicking the **Play** button, you will observe that two robotics arm would start to reach their initial position from their home configurations.
 
 <p align="center"><img src="Image/Unity/startup.gif"/></p>
+
+---
+
+### Oculus Teleoperation
 
 Right now you can view the game scene in the Oculus Headset and use the controller to control the manipulator arm in the meanwhile.
 Here we have set two ways *(Joint velocity/configuration)* to control the arm. The controlled joint would be marked as red. You can operate the thumb stick to move, the *A* and *B* button to switch joint and the trigger to open/close the gripper. 
 
 <p align="center"><img src="Image/Unity/oculus_control.gif"/></p>
+
+---
+
+### Start Visual Servoing Control
 
 Once you press keyboard **P** to enable ROS message transmission, the Camera Arm would move according to the goal object and TCP so that
 they will be in the predefined positions in 2D image to provide better view for the subject, which is achieved through Image-based Visual Servoing control.
