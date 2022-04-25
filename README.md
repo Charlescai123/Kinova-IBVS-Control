@@ -139,9 +139,17 @@ Here we have set two ways *(Joint velocity/configuration)* to control the arm. T
 
 ### Start Visual Servoing Control
 
-Once you press keyboard **P** to enable ROS message transmission, the Camera Arm would move according to the goal object and TCP so that
+Once the goal object and TCP are all in camera FOV. You can press keyboard **P** to enable ROS message transmission. The Camera Arm would then move according to the goal object and TCP so that
 they will be in the predefined positions in 2D image to provide better view for the subject, which is achieved through Image-based Visual Servoing control.
 
 <p align="center"><img src="Image/Unity/start_state.gif"/></p>
+
+---
+
+### Grasp Goal Object using IBVS
+
+You could now use Oculus controller to teleoperate the Manipulator Arm to move in order to grasp the target object, while the Camera Arm would provide autonomous control for the changing the camera position to make subject possess a clear and comfortable view. 
+
+<p align="center"><img src="Image/Unity/object_graspping.gif"/></p>
 
 ---
