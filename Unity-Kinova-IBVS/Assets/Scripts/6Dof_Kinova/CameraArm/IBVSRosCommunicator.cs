@@ -61,7 +61,7 @@ public class IBVSRosCommunicator : MonoBehaviour
             ROSOnFlag = false;
             CAController.StopAllJoint(CAJointArtiBodies);
         }
-        if (Input.GetKeyDown(KeyCode.V))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             ROSOnFlag ^= true;
         }
@@ -92,15 +92,14 @@ public class IBVSRosCommunicator : MonoBehaviour
         request.pg = GetImgPointInfo(camCaptor.goal.transform);         // Goal
 
         request.po = GetImgPointInfo(camCaptor.obsCenterPoint);         // Obstacle Center
-        request.ps = GetImgObsSegInfo(camCaptor.obstacle.transform);    // Obstacle Segment
+        //request.ps = GetImgSegmentInfo(camCaptor.obstacle.transform);    // Obstacle Segment
+        request.ps = GetImgSegmentInfo(camCaptor.goal.transform);    // Goal Segment
 
         // Obstacle Area
         request.area_o = GetObsAreaSize(camCaptor.obsCornerPoints);
 
         // Goal Area
-        Float64Msg area = new Float64Msg();
-        area.data = 10000f;
-        request.area_g = area;
+        request.area_o = GetObsAreaSize(camCaptor.goalCornerPoints);
 
         // Send ROS Service Message
         if (!ROSReceivedFlag)
@@ -174,16 +173,16 @@ public class IBVSRosCommunicator : MonoBehaviour
         return msg;
     }
 
-    // Get Obstacle Segment Information (4 Corner Point)
-    private PointOnImgMsg[] GetImgObsSegInfo(Transform obstacle)
+    // Get Obstacle/Goal Segment Information (4 Corner Point)
+    private PointOnImgMsg[] GetImgSegmentInfo(Transform obj)
     {
         PointOnImgMsg[] msgs = new PointOnImgMsg[4];
 
-        Transform centerPoint = obstacle.Find("Upper Center Point");
-        Transform cornerPoint1 = obstacle.Find("Corner Point1");
-        Transform cornerPoint2 = obstacle.Find("Corner Point2");
-        Transform cornerPoint3 = obstacle.Find("Corner Point3");
-        Transform cornerPoint4 = obstacle.Find("Corner Point4");
+        Transform centerPoint = obj.Find("Upper Center Point");
+        Transform cornerPoint1 = obj.Find("Corner Point1");
+        Transform cornerPoint2 = obj.Find("Corner Point2");
+        Transform cornerPoint3 = obj.Find("Corner Point3");
+        Transform cornerPoint4 = obj.Find("Corner Point4");
 
         msgs[0] = new PointOnImgMsg();
         msgs[1] = new PointOnImgMsg();

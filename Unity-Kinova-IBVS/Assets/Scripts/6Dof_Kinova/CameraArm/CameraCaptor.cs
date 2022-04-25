@@ -18,27 +18,35 @@ namespace Kinova6Dof
         [HideInInspector] public Transform obsCenterPoint;
         [HideInInspector] public Transform[] obsCornerPoints;
 
+        // Extract Goal upper side center point and 4 corner points
+        [HideInInspector] public Transform goalCenterPoint;
+        [HideInInspector] public Transform[] goalCornerPoints;
+
         // 2D Image Pixel of last frame
         private Vector2 lastGoalImgPixel;       // Goal
         private Vector2 lastTCPImgPixel;        // TCP
         private Vector2 lastObsImgPixel;        // Obstacle (Upper side center point)
         private Vector2[] lastObsSegImgPixels;  // Obstacle Segment (Cube)
-
+        private Vector2[] lastGoalSegImgPixels;  // Goal Segment (VC Box)
 
         void Awake()
         {
             // Initial Array
             obsCornerPoints = new Transform[4];
+            goalCornerPoints = new Transform[4];
             lastObsSegImgPixels = new Vector2[4];
+            lastGoalSegImgPixels = new Vector2[4];
 
-            // Extract obstacle information
+            // Extract obstacle and goal information
             obsCenterPoint = obstacle.transform.Find("Upper Center Point");
+            goalCenterPoint = goal.transform.Find("Upper Center Point");
             var name = "Corner Point";
             for (int i = 0; i < 4; i++)
             {
                 var order = i + 1;
                 var str = name + order.ToString();
                 obsCornerPoints[i] = obstacle.transform.Find(str);
+                goalCornerPoints[i] = goal.transform.Find(str);
             }
 
             // First get image pixel
@@ -46,8 +54,10 @@ namespace Kinova6Dof
             lastTCPImgPixel = Get2DImgPixel(VisualServoCam, TCP.transform);
             lastObsImgPixel = Get2DImgPixel(VisualServoCam, obsCenterPoint);
             for (int i = 0; i < 4; i++)
+            {
                 lastObsSegImgPixels[i] = Get2DImgPixel(VisualServoCam, obsCornerPoints[i]);
-
+                lastGoalSegImgPixels[i] = Get2DImgPixel(VisualServoCam, goalCornerPoints[i]);
+            }
 
             // Call Function to update Data
             InvokeRepeating("ImageCapture", 1f, 1 / updateRate);
@@ -77,7 +87,10 @@ namespace Kinova6Dof
             lastTCPImgPixel = Get2DImgPixel(VisualServoCam, TCP.transform);
             lastObsImgPixel = Get2DImgPixel(VisualServoCam, obsCenterPoint);
             for (int i = 0; i < 4; i++)
+            {
                 lastObsSegImgPixels[i] = Get2DImgPixel(VisualServoCam, obsCornerPoints[i]);
+                lastGoalSegImgPixels[i] = Get2DImgPixel(VisualServoCam, goalCornerPoints[i]);
+            }
         }
         /// <summary>
         /// Take Camera Screenshot
@@ -122,23 +135,10 @@ namespace Kinova6Dof
             return screenShot;
         }
 
-
         public void CameraViewProject()
         {
             var goalPos = goal.transform.position;
             var relativePos = VisualServoCam.transform.InverseTransformPoint(goalPos);
-
-            //Debug.Log("matrix is:" + VisualServoCam.projectionMatrix.GetRow(0).ToString("f4"));
-            //Debug.Log("matrix is:" + VisualServoCam.projectionMatrix.GetRow(1).ToString("f4"));
-            //Debug.Log("matrix is:" + VisualServoCam.projectionMatrix.GetRow(2).ToString("f4"));
-            //Debug.Log("matrix is:" + VisualServoCam.projectionMatrix.GetRow(3).ToString("f4"));
-
-            //Debug.Log("world matrix is:" + VisualServoCam.worldToCameraMatrix.GetRow(0).ToString("f4"));
-            //Debug.Log("world matrix is:" + VisualServoCam.worldToCameraMatrix.GetRow(1).ToString("f4"));
-            //Debug.Log("world matrix is:" + VisualServoCam.worldToCameraMatrix.GetRow(2).ToString("f4"));
-            //Debug.Log("world matrix is:" + VisualServoCam.worldToCameraMatrix.GetRow(3).ToString("f4"));
-
-            //Debug.Log("transformed pos:" + (VisualServoCam.worldToCameraMatrix * goalVec4).ToString("f4"));
 
             var screenPixel = Get2DImgPixel(VisualServoCam, goal.transform);
 
@@ -168,9 +168,6 @@ namespace Kinova6Dof
             //test.SetRow(2, new Vector4(1, 2, 3, 4));
             //test.SetRow(3, new Vector4(1, 2, 3, 4));
 
-            //var vv = new Vector4(1, 2, 3, 1);
-            //Debug.Log("!!!!!!!!!!!:" + test * vv);
-
             Vector3 worldPos1 = goal.transform.position;
             Vector3 screenPos = VisualServoCam.WorldToScreenPoint(worldPos1);
             //Vector3 screenPos = GetComponent<Camera>().WorldToScreenPoint(worldPos1);
@@ -190,11 +187,6 @@ namespace Kinova6Dof
                 Debug.Log("Mouse Position is:" + mousePos);
                 Debug.Log("Mouse World Position is:" + VisualServoCam.ScreenToWorldPoint(mousePos).ToString("f4"));
             }
-
-
-
-            //return new Vector2(VisualServoCam.WorldToViewportPoint(worldPos1),
-            //    VisualServoCam.ScreenToViewportPoint(screenPos));
         }
 
         // Used for mapping object 3d transform to 2d image transform
@@ -212,7 +204,6 @@ namespace Kinova6Dof
             var depth = viewportPos.z;
             return new Vector3(u, v, depth);
         }
-
 
         public Vector2 Get2DImgPixelVel(Camera cam, Transform worldtf)
         {
@@ -243,17 +234,33 @@ namespace Kinova6Dof
                 vel = (currPixel - this.lastObsImgPixel) / Time.deltaTime;
             }
 
-            // Obstacle Corner Point
+            // Goal Upper Bound Center Point
+            else if (worldtf == this.goalCenterPoint)
+            {
+                Vector2 currPixel = Get2DImgPixel(cam, this.goalCenterPoint);
+                vel = (currPixel - this.lastGoalImgPixel) / Time.deltaTime;
+            }
+
             else
             {
-                for (int i = 0; i < this.obsCornerPoints.Length; i++)
+                for (int i = 0; i < 4; i++)
                 {
+                    // Obstacle Corner Point
                     if (worldtf == this.obsCornerPoints[i].transform)
                     {
                         Vector2 currPixel = Get2DImgPixel(cam, this.obsCornerPoints[i]);
                         vel = (currPixel - this.lastObsSegImgPixels[i]) / Time.deltaTime;
                         break;
                     }
+
+                    // Goal Corner Point
+                    if (worldtf == this.goalCornerPoints[i].transform)
+                    {
+                        Vector2 currPixel = Get2DImgPixel(cam, this.goalCornerPoints[i]);
+                        vel = (currPixel - this.lastGoalSegImgPixels[i]) / Time.deltaTime;
+                        break;
+                    }
+
                 }
             }
             return vel;

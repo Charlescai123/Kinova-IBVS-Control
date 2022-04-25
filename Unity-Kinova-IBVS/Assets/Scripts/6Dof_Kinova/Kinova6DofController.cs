@@ -25,7 +25,7 @@ namespace Kinova6Dof
         public float[] jointVelocityLimits = { 1.3963f, 1.3963f, 1.3963f, 1.2218f, 1.2218f, 1.2218f };
         private ArticulationBody[] articulationChain;
 
-        private bool test = true;
+        //private bool test = true;
         private bool[] homeFinFlag;
 
         //Joint xDrive Parameters
