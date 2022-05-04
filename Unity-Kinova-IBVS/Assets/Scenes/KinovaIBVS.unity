@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2175,70 +2175,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 39d261406c0967f559723c621cc192a5, type: 3}
   m_PrefabInstance: {fileID: 286536709}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &288009363
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 288009364}
-  - component: {fileID: 288009367}
-  - component: {fileID: 288009368}
-  m_Layer: 0
-  m_Name: Kinova Publisher
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &288009364
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288009363}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.0823007, y: -1.1255381, z: -1.0254159}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1333457004}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &288009367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288009363}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 398428ed06873fa48829dadde88c9307, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TopicName: /niryo_joints
-  m_NiryoOne: {fileID: 0}
-  m_Target: {fileID: 0}
-  m_TargetPlacement: {fileID: 0}
---- !u!114 &288009368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288009363}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55ee6148794b60049875fb9f533a6387, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  KinovaManipulatorArm: {fileID: 225569709}
-  KinovaCameraArm: {fileID: 81509804}
-  testObj: {fileID: 847384211}
-  SBWY: {fileID: 0}
 --- !u!1 &309130535 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7746134005309899461, guid: b449bb8dca0628e43b2462e2bf0133c9, type: 3}
@@ -9869,7 +9805,6 @@ Transform:
   - {fileID: 225569712}
   - {fileID: 81509807}
   - {fileID: 1141796185}
-  - {fileID: 288009364}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13446,6 +13381,8 @@ MonoBehaviour:
   VisualServoCam: {fileID: 804196688}
   obsCenterPoint: {fileID: 0}
   obsCornerPoints: []
+  goalCenterPoint: {fileID: 0}
+  goalCornerPoints: []
 --- !u!114 &1778105957
 MonoBehaviour:
   m_ObjectHideFlags: 0

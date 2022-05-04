@@ -1,6 +1,6 @@
 function res = optimization_Sc(Pcg, Jcc, qc, dqc, pg, Pcg_vertices, pgv)
     Ref_pg = [854.0, 1681.0]';
-    Ref_area_g = 100000;
+    Ref_area_g = 30000;
     qc = qc';
     dqc = dqc';
     pg = pg';
@@ -71,27 +71,27 @@ function res = optimization_Sc(Pcg, Jcc, qc, dqc, pg, Pcg_vertices, pgv)
     [sol,fval,exitflag,output,lambda] = solve(prob, x0);%, 'Solver', 'fmincon'
 
     res = [sol.dq0, sol.dq1, sol.dq2, sol.dq3, sol.dq4, sol.dq5]*0.05;
-    Vcc_ = Jcc*res';
-    e3_ = 10000 * Vcc_(3)^2
-
-    dpg1_ = Pcg1 * res';
-    dpg2_ = Pcg2 * res';
-    dpg3_ = Pcg3 * res';
-    dpg4_ = Pcg4 * res';
-    pg1_next_ = pgv(1,:)' + dpg1_ * 0.05;
-    pg2_next_ = pgv(2,:)' + dpg2_ * 0.05;
-    pg3_next_ = pgv(3,:)' + dpg3_ * 0.05;
-    pg4_next_ = pgv(4,:)' + dpg4_ * 0.05;
+%     Vcc_ = Jcc*res';
+%     e3_ = 10000 * Vcc_(3)^2
+% 
+%     dpg1_ = Pcg1 * res';
+%     dpg2_ = Pcg2 * res';
+%     dpg3_ = Pcg3 * res';
+%     dpg4_ = Pcg4 * res';
+%     pg1_next_ = pgv(1,:)' + dpg1_ * 0.05;
+%     pg2_next_ = pgv(2,:)' + dpg2_ * 0.05;
+%     pg3_next_ = pgv(3,:)' + dpg3_ * 0.05;
+%     pg4_next_ = pgv(4,:)' + dpg4_ * 0.05;
     
-    det1_ = (pg2_next_(1) - pg1_next_(1)) * (pg2_next_(2) - pg3_next_(2)) - (pg2_next_(2) - pg1_next_(2)) * (pg2_next_(1) - pg3_next_(1));
-    det2_ = (pg4_next_(1) - pg1_next_(1)) * (pg4_next_(2) - pg3_next_(2)) - (pg4_next_(2) - pg1_next_(2)) * (pg4_next_(1) - pg3_next_(1));
-    s13_ = norm(pg1_next_ - pg3_next_);
-    d1_ = norm(det1_) / norm(pg1_next_ - pg3_next_);
-    d2_ = norm(det2_) / norm(pg1_next_ - pg3_next_);
-    area_g_ = 0.5*(d1_ + d2_)*s13_
-    e2_ = 0.000001*(Ref_area_g - area_g_)^2
+%     det1_ = (pg2_next_(1) - pg1_next_(1)) * (pg2_next_(2) - pg3_next_(2)) - (pg2_next_(2) - pg1_next_(2)) * (pg2_next_(1) - pg3_next_(1));
+%     det2_ = (pg4_next_(1) - pg1_next_(1)) * (pg4_next_(2) - pg3_next_(2)) - (pg4_next_(2) - pg1_next_(2)) * (pg4_next_(1) - pg3_next_(1));
+%     s13_ = norm(pg1_next_ - pg3_next_);
+%     d1_ = norm(det1_) / norm(pg1_next_ - pg3_next_);
+%     d2_ = norm(det2_) / norm(pg1_next_ - pg3_next_);
+%     area_g_ = 0.5*(d1_ + d2_)*s13_
+%     e2_ = 0.000001*(Ref_area_g - area_g_)^2
 
-    dpg_ = Pcg*res';
-    pg_next_ = pg + dpg_ * 0.05;
-    e1_ = (Ref_pg - pg_next_).^2
+%     dpg_ = Pcg*res';
+%     pg_next_ = pg + dpg_ * 0.05;
+%     e1_ = (Ref_pg - pg_next_).^2
 end

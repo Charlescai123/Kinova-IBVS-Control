@@ -50,13 +50,18 @@ It would then utilize an optimization method to give out the desired joints velo
 We use matlab optimization toolbox as the optimizer where you need to generate module *matlab engine* to interact with Matlab in Python script.
 To install it, you need to first change directory by
 
-> $ cd $MATLABROOT/extern/engines/python
-
+```bash
+$ cd $MATLABROOT/extern/engines/python
+```
 where *MATLABROOT* is the root directory of matlab installed, and use the command to install it where *INSTALL_DIR* is the directory to save python package. (Usually it is */usr/lib/python3/dist-packages*)
 
-> $ python setup.py install --prefix="$INSTALL_DIR"
+```bash
+$ python setup.py install --prefix="$INSTALL_DIR"
+```
 
 Finally, if you can import matlab without errors, it means your python interpreter could find the module path, and the generation is successful.
+
+> Note: if you are to install matlab under WSL, it is likely that there would be problems after installation. So it is highly recommended that you take a look at [Troubleshooting](##Troubleshooting) part before installing it. 
 
 ---
 
@@ -74,11 +79,12 @@ First you must make the right settings in Unity to connect ROS on startup and se
 
 Then you need to compile and launch ROS package by
 
-> $ cd Kinova-IBVS-Control/ROS/ \
-> $ catkin_make \
-> $ source devel/setup.bash \
-> $ roslaunch ibvs_control ibvs.launch
-
+```bash
+$ cd Kinova-IBVS-Control/ROS/ 
+$ catkin_make 
+$ source devel/setup.bash 
+$ roslaunch ibvs_control ibvs.launch
+```
 ---
 
 ### Linux
@@ -157,3 +163,47 @@ You could now use Oculus controller to teleoperate the Manipulator Arm to move i
 <p align="center"><img src="Image/Unity/object_grasping.gif"/></p>
 
 ---
+
+## Troubleshooting
+
+One more thing to get attention is that there could be problems after matlab installation under WSL which indicates matlab license activation fails due to different HostID identified. This usually occurs when you finish installing matlab on WSL and try to reboot to launch it again, that being said, your terminal may get something similar as below:
+
+<p align="center"><img src="Image/Matlab/matlab_launch_error.png" width="720"/></p>
+
+> **Reason:** It happens in that WSL network configuration is not static: whenever WSL reboots, it will be assigned a different IP/MAC address. However, matlab licence utilizes *HostID* (MAC address of machine) for activation identification, because of which you will get activation-failed error every time after WSL reboots. 
+
+---
+
+In general, there're 2 methods provided to solve it:
+
+- ### Temporarily Approach
+
+  > Execute the original activation shell script in matlab folder to reactivate it:
+    ```bash
+    $ ./$MATLABROOT/bin/activate_matlab.sh
+    ```
+  
+- ### Permanent Approach
+  
+  > Before installing the matlab, set a static MAC address for WSL. 
+   
+  First get current MAC address of network adapter driver **eth0** in WSL by
+  
+  ```bash
+  $ ifconfig|grep -A10 eth0|grep ether|awk '{print $2}'
+  ```
+  And you will get a MAC address with the format, for example, similar to
+  
+  <p align="center"><img src="Image/Matlab/mac_address.png" width="720"/></p>
+  
+  Then append these commands to the end of **~/.bashrc** file
+  ```bash
+   MAC_ADDR_VAL="00:15:5d:9b:d1:ec"
+   CURR_MAC_ADDR=$(ip link show bond0 | awk '/ether/ {print $2}')
+   if [[ $MAC_ADDR_VAL != $CURR_MAC_ADDR ]];then
+     sudo ip link set dev bond0 address $MAC_ADDR_VAL
+   fi
+  ```
+  where value of variable **MAC_ADDR_VAL** is set to be the same as the MAC address you get from **eth0**.
+  
+  > In this way, you can start matlab installation on WSL and no error would occur as expected.

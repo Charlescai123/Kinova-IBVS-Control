@@ -1,7 +1,12 @@
 #!/usr/bin/python3
+import threading
+
 import rospy
 import numpy as np
+import matplotlib.pyplot as plt
 import time
+
+from matplotlib.animation import FuncAnimation
 
 import optimization
 from ibvs_control.srv import OptimIBVS, OptimIBVSResponse, OptimIBVSRequest
@@ -13,6 +18,42 @@ class BackendNode:
         rospy.init_node('backend_ros_node')
         self.serv_states = rospy.Service('optim_ibvs', OptimIBVS, self.service_callback)
         self.state = 'Ss'
+        self.total_time = [time.process_time()]
+        self.plot_goal1 = [0]
+        self.plot_goal2 = [0]
+        self.plot_goal3 = [0]
+        self.plot_goal4 = [0]
+
+        # t = threading.Thread(target=self.plot_evaluation, name='LoopThread')
+        # t.start()
+
+    def plot_evaluation(self):
+        # x = np.linspace(0, 2 * np.pi, 20)
+
+        # plt.plot(self.total_time, self.plot_goal, 'ro-', label='sinx')
+
+        plt.ion()
+        # First set up the figure, the axis, and the plot element we want to
+        fig = plt.figure(figsize=(6, 4))
+        ax = plt.axes()
+        line, = ax.plot([], [], lw=2)
+
+        line.set_data(self.total_time, self.plot_goal)
+        # plt.plot(x, y, 'b*--', label='cosx')
+
+
+        plt.title('plot curve', fontsize=25)  # 标题
+        # plt.xlim(-1, 7)  # x轴范围
+        # plt.ylim(-1.5, 1.5)  # y轴范围
+        plt.xlabel('x', fontsize=20)  # x轴标签
+        plt.ylabel('y', fontsize=20)  # y轴标签
+        plt.legend(loc='best')  # 图例
+
+        plt.pause(0.1)
+        plt.show()
+        plt.clf()
+
+        # continue
 
     def service_callback(self, req: OptimIBVSRequest):
         qt = np.asarray([i.data for i in req.qt], dtype=np.float64)
@@ -48,6 +89,7 @@ class BackendNode:
 
         area_g = req.area_g.data
         area_o = req.area_o.data
+        # print(area_o)
         # print('area_g\n', area_g)
         # print('area_o\n', area_o)
 
@@ -80,6 +122,9 @@ class BackendNode:
             result = optimization.stateSs(qc, qt, dqc, dqt, pt, zt, pg, zg)[0]
             e1 = np.linalg.norm(optimization.Ref_pt - pt)
             e2 = np.linalg.norm(optimization.Ref_pg - pg)
+            self.plot_goal1.append(e1)
+            self.plot_goal2.append(e2)
+
             print('e1:', e1)
             print('e2:', e2)
             if e1 < 10 and e2 < 10:
@@ -89,33 +134,56 @@ class BackendNode:
             result = optimization.stateSa(qc, qt, dqc, dqt, pt, zt, pg, zg)[0]
             e1 = np.linalg.norm(optimization.Ref_pt - pt)
             e2 = np.linalg.norm(optimization.Ref_pg - pg)
+
+            self.plot_goal1.append(e1)
+            self.plot_goal2.append(e2)
             print('e1:', e1)
             print('e2:', e2)
             print(area_g)
-            if e1 < 8 and area_g >= 60000:
+            if e1 < 20 and area_g >= 30000:
                 self.state = 'Sc'
-            # if optimization.constraint_o():
-            #      self.state = 'So'
+            if area_o == 1.0:
+                self.state = 'So'
         elif self.state == 'Sc':
             result = optimization.stateSc(qc, qt, dqc, dqt, pg, zg, pg_seg)[0]
             e1 = np.linalg.norm(optimization.Ref_pg - pg)
             print('e1:', e1)
             if pg[0] > optimization.RESOLUTION[0] or pg[1] > optimization.RESOLUTION[1]:
                 self.state = 'Ss'
-            # if optimization.constraint_o():
+            # if area_o == 0.0:
             #      self.state = 'So'
         elif self.state == 'So':
-            result = optimization.stateSo(qc, qt, dqc, dqt, pg, zg, pg_seg)[0]
+            result = optimization.stateSo(qc, qt, dqc, dqt, pt, zt, pg, zg, po, zo, po_seg)[0]
             e1 = np.linalg.norm(optimization.Ref_po - po)
-            # if not optimization.constraint_o() and e1 < 20:
-            #     self.state = 'Sa'
+            e2 = np.linalg.norm(optimization.Ref_pg - pg)
+            # print(po)
+            print('e1:', e1)
+            print('e2:', e2)
+            if area_o == 0.0:
+                self.state = 'Sa'
 
-        print('result\n', result)
+        # print('result\n', result)
+        # if optimization.constraint_o(qc, qt, dqc, dqt, pt, dpt, zt, ps):
+        #     print('--->')
+        # print('--->', optimization.constraint_o(qc, qt, dqc, dqt, pt, dpt, zt, ps))
         print('opt time:', time.time() - t1)
         print()
 
         response = OptimIBVSResponse()
-        response.dqc_next = [Float64(i) for i in result]  # list(np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0]))
+        response.dqc_next = [Float64(i) for i in result]  # list(np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])) result
+
+        fig = plt.figure(figsize=(10, 5))
+
+        current_time = time.process_time()
+        cost_time = current_time - self.total_time[-1]
+        self.total_time.append(current_time)
+
+        print("time:"+str(self.total_time))
+        print("err:"+str(self.plot_goal1))
+        print("err:"+str(self.plot_goal2))
+        if len(self.plot_goal1) == 100:
+            exit(0)
+        # self.plot_evaluation()
 
         return response
 

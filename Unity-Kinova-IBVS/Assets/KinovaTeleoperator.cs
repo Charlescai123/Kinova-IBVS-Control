@@ -151,6 +151,7 @@ public class KinovaTeleoperator : MonoBehaviour
         if (TeleoperationOn)
         {
             KinovaJointPosControl();
+            //KinovaJointVelControl();
         }
     }
     public void AllJointGo(ArticulationBody[] articulationbody, float[] q)

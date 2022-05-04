@@ -59,8 +59,8 @@ function res = optimization_Sa(Pcg, Pct, Jcc, qc, dqc, pg, pt)
 %     lambda.Constraints.cons6
 %     dpg_ = Pcg * res';
 %     dpt_ = Pct * res';
-    Vcc_ = Jcc*res';
-    Vcc_(3)
+%     Vcc_ = Jcc*res';
+%     Vcc_(3)
 %     e_ = Ref_pg - (pg + dpg_ * 0.05)
 %     e_ = Ref_pt - (pt + dpt_ * 0.05)
 end

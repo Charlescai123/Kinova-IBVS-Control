@@ -32,6 +32,7 @@ public class IBVSRosCommunicator : MonoBehaviour
     // ROS Variables
     private bool ROSOnFlag = false;
     private bool ROSReceivedFlag = false;
+    private bool StateOFlag = false;
 
     void Start()
     {
@@ -65,6 +66,12 @@ public class IBVSRosCommunicator : MonoBehaviour
         {
             ROSOnFlag ^= true;
         }
+        // Send State O Flag
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            StateOFlag ^= true;
+        }
+
         if (ROSOnFlag)
         {
             IBVSSrvCall();
@@ -96,10 +103,22 @@ public class IBVSRosCommunicator : MonoBehaviour
         request.pg_seg = GetImgSegmentInfo(camCaptor.goal.transform);    // Goal Segment
 
         // Obstacle Area
-        request.area_o = GetObsAreaSize(camCaptor.obsCornerPoints);
+        //request.area_o = GetQuadAreaSize(camCaptor.obsCornerPoints);
+        Float64Msg wtf = new Float64Msg();
+        if (StateOFlag)
+        {
+            wtf.data = 1;
+            request.area_o = wtf;
+        }
+        else
+        {
+            wtf.data = 0;
+            request.area_o = wtf;
+        }
+        Debug.Log("State O Flag is:" + wtf.data);
 
         // Goal Area
-        request.area_o = GetObsAreaSize(camCaptor.goalCornerPoints);
+        request.area_g = GetQuadAreaSize(camCaptor.goalCornerPoints);
 
         // Send ROS Service Message
         if (!ROSReceivedFlag)
@@ -198,7 +217,7 @@ public class IBVSRosCommunicator : MonoBehaviour
 
     }
 
-    private Float64Msg GetObsAreaSize(Transform[] tfs)
+    private Float64Msg GetQuadAreaSize(Transform[] tfs)
     {
         Float64Msg areaSize = new Float64Msg();
         Vector2[] points = new Vector2[tfs.Length];
