@@ -67,7 +67,7 @@ Finally, if you can import matlab without errors, it means your python interpret
 
 ## Setup
 
-Before running the program, please first install these two packages [Oculus-Integration](https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022) and [SteamVR Plugin](https://assetstore.unity.com/packages/tools/integration/steamvr-plugin-32647) in Unity Asset Store as well as the two ROS Plugins [URDF-Importer](https://github.com/Unity-Technologies/URDF-Importer) and [ROS-TCP-Connector](https://github.com/Unity-Technologies/ROS-TCP-Connector) so that you won't get any pre-runtime compiling errors. 
+Before running the program, please first install these two packages [Oculus-Integration](https://assetstore.unity.com/packages/tools/integration/oculus-integration-82022) and [SteamVR Plugin](https://assetstore.unity.com/packages/tools/integration/steamvr-plugin-32647) (Optional) in Unity Asset Store as well as the two ROS Plugins [URDF-Importer](https://github.com/Unity-Technologies/URDF-Importer) and [ROS-TCP-Connector](https://github.com/Unity-Technologies/ROS-TCP-Connector) so that you won't get any pre-runtime compiling errors. 
 In order to simulate remote control scene in reality, we have introduced the VR HMD (Head Mounted Device) [Oculus Quest 2](https://www.oculus.com/quest-2/) where the hardware of VR headset only supports Windows. So there are actually two OS versions we support.
 One is ubuntu with ROS installed and another is tested under Windows 10 with WSL (Windows Subsystem for Linux). Both version all need MATLAB installed.
 

@@ -6,5 +6,5 @@
 		<param name="tcp_ip" type="string" value="$(arg tcp_ip)"/>
         <param name="tcp_port" type="int" value="$(arg tcp_port)"/>
 	</node>
-    <node name="backend" pkg="ibvs_control" type="node.py" output="screen" cwd="node"/>
+    <node name="ibvs_backend" pkg="ibvs_control" type="backend_node.py" output="screen" cwd="backend_node"/>
 </launch>

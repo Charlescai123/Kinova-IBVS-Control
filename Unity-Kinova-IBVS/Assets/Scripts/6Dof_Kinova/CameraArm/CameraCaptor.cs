@@ -23,10 +23,10 @@ namespace Kinova6Dof
         [HideInInspector] public Transform[] goalCornerPoints;
 
         // 2D Image Pixel of last frame
-        private Vector2 lastGoalImgPixel;       // Goal
-        private Vector2 lastTCPImgPixel;        // TCP
-        private Vector2 lastObsImgPixel;        // Obstacle (Upper side center point)
-        private Vector2[] lastObsSegImgPixels;  // Obstacle Segment (Cube)
+        private Vector2 lastGoalImgPixel;        // Goal
+        private Vector2 lastTCPImgPixel;         // TCP
+        private Vector2 lastObsImgPixel;         // Obstacle (Upper side center point)
+        private Vector2[] lastObsSegImgPixels;   // Obstacle Segment (Cube)
         private Vector2[] lastGoalSegImgPixels;  // Goal Segment (VC Box)
 
         void Awake()
@@ -66,14 +66,12 @@ namespace Kinova6Dof
         // Update is called once per frame
         void Update()
         {
-            //CameraViewProject();
+            GetCameraParam();
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 TakeScreenShot(VisualServoCam, new Rect(0, 0, Screen.width, Screen.height));
             }
             var vel = Get2DImgPixelVel(VisualServoCam, TCP.transform);
-            //Debug.Log("TCP Velocity on Img:" + vel.x.ToString("f4") + " " + vel.y.ToString("f4"));
-
         }
 
         private void LateUpdate()
@@ -95,7 +93,7 @@ namespace Kinova6Dof
         /// <summary>
         /// Take Camera Screenshot
         /// </summary>
-        /// <returns>The screenshot2.</returns>
+        /// <returns>The screenshot</returns>
         /// <param name="camera">Camera</param>
         /// <param name="rect">Rect.Areas to be taken for screenshot</param>
         public Texture2D TakeScreenShot(Camera camera, Rect rect, string filepath = "/Snapshot/Screenshot")
@@ -135,62 +133,20 @@ namespace Kinova6Dof
             return screenShot;
         }
 
-        public void CameraViewProject()
+        /// <summary>
+        /// Print information about Visual Servoing Camera (Intrinsic/Extrinsic Parameters)
+        /// </summary>
+        public void GetCameraParam()
         {
-            var goalPos = goal.transform.position;
-            var relativePos = VisualServoCam.transform.InverseTransformPoint(goalPos);
-
-            var screenPixel = Get2DImgPixel(VisualServoCam, goal.transform);
-
-            var u = screenPixel.x;
-            var v = screenPixel.y;
-
-            Debug.Log("Pixel u:" + u.ToString("f4"));
-            Debug.Log("Pixel v:" + v.ToString("f4"));
-
-            //Debug.Log("View Coordinate:" + VisualServoCam.ViewportToScreenPoint(viewportPos));
-            Debug.Log("Projection Matrix is:" + VisualServoCam.projectionMatrix.ToString("f4"));
-
-            Debug.Log("VSCam Pos is:" + VisualServoCam.transform.position);
-            Debug.Log("VSCam Rot is:" + VisualServoCam.transform.rotation);
-            Debug.Log("Pixel Height:" + VisualServoCam.pixelHeight.ToString("f4"));
-            Debug.Log("Pixel Width:" + VisualServoCam.pixelWidth.ToString("f4"));
-            //Debug.Log("cameraVel is:" + VisualServoCam.velocity.ToString("f4"));
-
-            //Debug.Log("FOV is:" + VisualServoCam.fieldOfView.ToString("f4"));
-            //Debug.Log("Focal length is:" + VisualServoCam.focalLength.ToString("f4"));
-            ////Debug.Log("p is:" + relativePos.ToString("f4"));
-            //Debug.Log("calc u and v is u:" + u.ToString("f4") + " v:" + v.ToString("f4"));
-
-            //Matrix4x4 test = Matrix4x4.identity;
-            //test.SetRow(0, new Vector4(1, 2, 3, 4));
-            //test.SetRow(1, new Vector4(1, 2, 3, 4));
-            //test.SetRow(2, new Vector4(1, 2, 3, 4));
-            //test.SetRow(3, new Vector4(1, 2, 3, 4));
-
-            Vector3 worldPos1 = goal.transform.position;
-            Vector3 screenPos = VisualServoCam.WorldToScreenPoint(worldPos1);
-            //Vector3 screenPos = GetComponent<Camera>().WorldToScreenPoint(worldPos1);
-            Vector3 worldPos2 = VisualServoCam.ScreenToWorldPoint(screenPos);   //世界坐标系与屏幕坐标系相互转换
-
-            //Debug.Log("target world pos1 is:" + worldPos1);
-
-            //Debug.Log("Goal Position is:" + worldPos1.ToString("f4"));
-            //Debug.Log("target screen Pos is:" + screenPos);
-            //Debug.Log("target world pos2 is:" + worldPos2);      // 视口坐标系(x,y范围0-1)
-            //Debug.Log(screenPos.x / Screen.width + " " + screenPos.y / Screen.height);
-            //Debug.Log("target viewpoint Pos1 is" + VisualServoCam.WorldToViewportPoint(worldPos1));
-            //Debug.Log("target viewpoint Pos2 is" + VisualServoCam.ScreenToViewportPoint(screenPos));
-            if (Input.GetMouseButtonDown(0))
-            {
-                Vector2 mousePos = Input.mousePosition;
-                Debug.Log("Mouse Position is:" + mousePos);
-                Debug.Log("Mouse World Position is:" + VisualServoCam.ScreenToWorldPoint(mousePos).ToString("f4"));
-            }
+            Debug.Log("VS Camera Pixel Rect is:" + VisualServoCam.pixelRect);
+            Debug.Log("VS Camera Projection Matrix (Intrinsic) is:" + VisualServoCam.projectionMatrix.ToString("f4"));
+            Debug.Log("VS Camera Projection Matrix (Extrinsic) is:" + VisualServoCam.worldToCameraMatrix.ToString("f4"));
         }
 
-        // Used for mapping object 3d transform to 2d image transform
-        // (Pixel coordinate origin is set at left above of the whole image)
+        /// <summary>
+        /// Used for mapping 3D object transform to 2D image transform
+        /// (Pixel coordinate origin is set at left above of the whole image)
+        /// </summary>
         public Vector3 Get2DImgPixel(Camera cam, Transform worldtf)
         {
             var worldPos = worldtf.position;
@@ -205,6 +161,10 @@ namespace Kinova6Dof
             return new Vector3(u, v, depth);
         }
 
+        /// <summary>
+        /// Used for obtaining 3D object velocity on 2D image
+        /// (Pixel coordinate origin is set at left above of the whole image)
+        /// </summary>
         public Vector2 Get2DImgPixelVel(Camera cam, Transform worldtf)
         {
             Vector2 vel = new Vector2(0, 0);

@@ -14,21 +14,23 @@ namespace RosMessageTypes.IbvsControl
         public override string RosMessageName => k_RosMessageName;
 
         public Std.Float64Msg[] qc;
-        //  6
+        //  camera-arm joint position (array of length 6)
         public Std.Float64Msg[] dqc;
-        //  6
-        public Std.Float64Msg[] qt;
-        //  6
-        public Std.Float64Msg[] dqt;
-        //  6
+        //  camera-arm joint velocity ((array of length 6)
+        public Std.Float64Msg[] qm;
+        //  manipulator-arm joint position (array of length 6)
+        public Std.Float64Msg[] dqm;
+        //  manipulator-arm joint velocity (array of length 6)
         public PointOnImgMsg pt;
-        //  tool com
+        //  tool COM (center of mass)
         public PointOnImgMsg pg;
-        //  goal com
+        //  goal COM (center of mass)
         public PointOnImgMsg po;
-        //  occlusion com
+        //  occlusion COM (center of mass)
         public Std.Float64Msg area_g;
+        //  area of goal on image
         public Std.Float64Msg area_o;
+        //  area of obstacle on image
         public PointOnImgMsg[] pg_seg;
         //  4 points of goal segmentation
         public PointOnImgMsg[] po_seg;
@@ -38,8 +40,8 @@ namespace RosMessageTypes.IbvsControl
         {
             this.qc = new Std.Float64Msg[0];
             this.dqc = new Std.Float64Msg[0];
-            this.qt = new Std.Float64Msg[0];
-            this.dqt = new Std.Float64Msg[0];
+            this.qm = new Std.Float64Msg[0];
+            this.dqm = new Std.Float64Msg[0];
             this.pt = new PointOnImgMsg();
             this.pg = new PointOnImgMsg();
             this.po = new PointOnImgMsg();
@@ -49,12 +51,12 @@ namespace RosMessageTypes.IbvsControl
             this.po_seg = new PointOnImgMsg[0];
         }
 
-        public OptimIBVSRequest(Std.Float64Msg[] qc, Std.Float64Msg[] dqc, Std.Float64Msg[] qt, Std.Float64Msg[] dqt, PointOnImgMsg pt, PointOnImgMsg pg, PointOnImgMsg po, Std.Float64Msg area_g, Std.Float64Msg area_o, PointOnImgMsg[] pg_seg, PointOnImgMsg[] po_seg)
+        public OptimIBVSRequest(Std.Float64Msg[] qc, Std.Float64Msg[] dqc, Std.Float64Msg[] qm, Std.Float64Msg[] dqm, PointOnImgMsg pt, PointOnImgMsg pg, PointOnImgMsg po, Std.Float64Msg area_g, Std.Float64Msg area_o, PointOnImgMsg[] pg_seg, PointOnImgMsg[] po_seg)
         {
             this.qc = qc;
             this.dqc = dqc;
-            this.qt = qt;
-            this.dqt = dqt;
+            this.qm = qm;
+            this.dqm = dqm;
             this.pt = pt;
             this.pg = pg;
             this.po = po;
@@ -70,8 +72,8 @@ namespace RosMessageTypes.IbvsControl
         {
             deserializer.Read(out this.qc, Std.Float64Msg.Deserialize, deserializer.ReadLength());
             deserializer.Read(out this.dqc, Std.Float64Msg.Deserialize, deserializer.ReadLength());
-            deserializer.Read(out this.qt, Std.Float64Msg.Deserialize, deserializer.ReadLength());
-            deserializer.Read(out this.dqt, Std.Float64Msg.Deserialize, deserializer.ReadLength());
+            deserializer.Read(out this.qm, Std.Float64Msg.Deserialize, deserializer.ReadLength());
+            deserializer.Read(out this.dqm, Std.Float64Msg.Deserialize, deserializer.ReadLength());
             this.pt = PointOnImgMsg.Deserialize(deserializer);
             this.pg = PointOnImgMsg.Deserialize(deserializer);
             this.po = PointOnImgMsg.Deserialize(deserializer);
@@ -87,10 +89,10 @@ namespace RosMessageTypes.IbvsControl
             serializer.Write(this.qc);
             serializer.WriteLength(this.dqc);
             serializer.Write(this.dqc);
-            serializer.WriteLength(this.qt);
-            serializer.Write(this.qt);
-            serializer.WriteLength(this.dqt);
-            serializer.Write(this.dqt);
+            serializer.WriteLength(this.qm);
+            serializer.Write(this.qm);
+            serializer.WriteLength(this.dqm);
+            serializer.Write(this.dqm);
             serializer.Write(this.pt);
             serializer.Write(this.pg);
             serializer.Write(this.po);
@@ -107,8 +109,8 @@ namespace RosMessageTypes.IbvsControl
             return "OptimIBVSRequest: " +
             "\nqc: " + System.String.Join(", ", qc.ToList()) +
             "\ndqc: " + System.String.Join(", ", dqc.ToList()) +
-            "\nqt: " + System.String.Join(", ", qt.ToList()) +
-            "\ndqt: " + System.String.Join(", ", dqt.ToList()) +
+            "\nqm: " + System.String.Join(", ", qm.ToList()) +
+            "\ndqm: " + System.String.Join(", ", dqm.ToList()) +
             "\npt: " + pt.ToString() +
             "\npg: " + pg.ToString() +
             "\npo: " + po.ToString() +

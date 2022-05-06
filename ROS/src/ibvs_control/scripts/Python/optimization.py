@@ -4,7 +4,7 @@ import matlab.engine
 
 from interaction_matrix import getIM
 from jacobian import forwardKinematics, jacobian, jacobianBody, adjointMatrix
-from robots import Mat_M_camera, Mat_M_tool, Mat_S_body_camera, Mat_S_body_tool, Mat_S_space_camera, Mat_S_space_tool
+from robot import Mat_M_camera, Mat_M_tool, Mat_S_body_camera, Mat_S_body_tool, Mat_S_space_camera, Mat_S_space_tool
 
 RESOLUTION = np.array([2064, 2096])
 

@@ -14,7 +14,7 @@ namespace RosMessageTypes.IbvsControl
         public override string RosMessageName => k_RosMessageName;
 
         public Std.Float64Msg[] dqc_next;
-        //  6
+        //  camera-arm joint target velocity (array of length 6)
 
         public OptimIBVSResponse()
         {

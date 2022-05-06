@@ -1,4 +1,3 @@
-using RosMessageTypes.Moveit;
 using RosMessageTypes.IbvsControl;
 using RosMessageTypes.Std;
 using System.Collections;
@@ -88,11 +87,11 @@ public class IBVSRosCommunicator : MonoBehaviour
 
         var request = new OptimIBVSRequest();
 
-        // Position and Velocity of Camera Arm and Manipulation Arm
+        // Position and Velocity of Camera Arm and Manipulation Arm joints
         request.qc = GetJointConfiguration(CAJointArtiBodies);
-        request.qt = GetJointConfiguration(MAJointArtiBodies);
+        request.qm = GetJointConfiguration(MAJointArtiBodies);
         request.dqc = GetJointVelocity(CAJointArtiBodies);
-        request.dqt = GetJointVelocity(MAJointArtiBodies);
+        request.dqm = GetJointVelocity(MAJointArtiBodies);
 
         // Image Point Info
         request.pt = GetImgPointInfo(camCaptor.TCP.transform);          // TCP
@@ -214,7 +213,6 @@ public class IBVSRosCommunicator : MonoBehaviour
         msgs[3] = GetImgPointInfo(cornerPoint4);
 
         return msgs;
-
     }
 
     private Float64Msg GetQuadAreaSize(Transform[] tfs)

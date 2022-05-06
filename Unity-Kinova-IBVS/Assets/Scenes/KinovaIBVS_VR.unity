@@ -6542,35 +6542,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 816732728}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23cd794dbbceed74ab1bc4a3088c2ce3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fK: {fileID: 816732731}
-  numJoint: 6
-  maxItreration: 20
-  tolerancePosition: 0.01
-  toleranceRotation: 0.0872665
---- !u!114 &816732731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 816732728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d138b5ea7eddc348b3219401a03891a, type: 3}
+  m_Script: {fileID: 11500000, guid: 28b22dbc77e4b0e4ba64b3305a59834c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   numJoint: 6
   alpha:
   - 3.1415927
-  - 1.5707963
-  - 3.141593
-  - 1.5707963
-  - 1.5707963
-  - 1.5707963
-  - 3.141593
+  - 1.5707964
+  - 3.1415927
+  - 1.5707964
+  - 1.5707964
+  - 1.5707964
+  - 3.1415927
   a:
   - 0
   - 0
@@ -6590,8 +6573,8 @@ MonoBehaviour:
   initialTheta:
   - 0
   - 0
-  - -1.570796
-  - -1.570796
+  - -1.5707964
+  - -1.5707964
   - 3.1415927
   - 3.1415927
   - 3.1415927
@@ -6604,11 +6587,28 @@ MonoBehaviour:
   - 0
   angleUpperLimits:
   - 0
+  - 2.25
   - 2.58
   - 0
   - 2.1
   - 0
-  - 0
+--- !u!114 &816732731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816732728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0f140733acace34587fc1511269757b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fK: {fileID: 0}
+  numJoint: 6
+  maxItreration: 20
+  tolerancePosition: 0.01
+  toleranceRotation: 0.0872665
 --- !u!4 &830359323 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2101311687151090557, guid: 7b7705c20abcd0e47aa8a9eb1eaa86ba, type: 3}
@@ -8189,8 +8189,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1039172653}
-  - component: {fileID: 1039172654}
   - component: {fileID: 1039172655}
+  - component: {fileID: 1039172654}
   - component: {fileID: 1039172656}
   m_Layer: 0
   m_Name: MA Controller
@@ -8222,26 +8222,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1039172652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a00ffe8fc114c24db72bfd416ce5c9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jointRoot: {fileID: 2081010623}
-  endEffector: {fileID: 705393466}
-  jointController: {fileID: 1039172655}
-  iK: {fileID: 816732730}
-  jointSpeed: 0.5
-  linearSpeed: 0.2
-  angularSpeed: 0.15
---- !u!114 &1039172655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039172652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd5a4a11003500489d7c261652cab47, type: 3}
+  m_Script: {fileID: 11500000, guid: 64c3653d13a73d346ae651f8b91ce358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   useGravity: 0
@@ -8265,6 +8246,25 @@ MonoBehaviour:
   stiffness: 10000
   damping: 10000
   forceLimit: 1000
+--- !u!114 &1039172655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039172652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026a27351308da94b9d065ca081ef2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jointRoot: {fileID: 2081010623}
+  endEffector: {fileID: 705393466}
+  jointController: {fileID: 1039172654}
+  iK: {fileID: 816732731}
+  jointSpeed: 0.5
+  linearSpeed: 0.2
+  angularSpeed: 0.15
 --- !u!114 &1039172656
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11171,7 +11171,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1421779385}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cd5a4a11003500489d7c261652cab47, type: 3}
+  m_Script: {fileID: 11500000, guid: 64c3653d13a73d346ae651f8b91ce358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   useGravity: 0
@@ -14814,7 +14814,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1936833525}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0f3ab58a234e814bade0173cad69c42, type: 3}
+  m_Script: {fileID: 11500000, guid: ecd50af2df76b5f4ebd75efe6f5158fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ManipulatorGripper: {fileID: 1039172656}
@@ -14822,8 +14822,8 @@ MonoBehaviour:
   IsGripperOpen: 1
   jointRoot: {fileID: 2081010623}
   endEffector: {fileID: 705393466}
-  MAJointController: {fileID: 1039172655}
-  iK: {fileID: 816732730}
+  MAJointController: {fileID: 1039172654}
+  iK: {fileID: 816732731}
   highLightColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1961364755
 GameObject:
