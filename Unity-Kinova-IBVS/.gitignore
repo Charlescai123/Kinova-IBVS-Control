@@ -14,8 +14,15 @@
 /[Aa]ssets/[Rr]os[Mm]essages/
 /[Aa]ssets/[Rr]os[Mm]essages.meta
 
-# Ignore Snapshot
-/[Aa]ssets/Snapshot/
+# Ignore some unnecessary parts
+/[Aa]ssets/Audio/
+/[Aa]ssets/Audio.meta
+/[Aa]ssets/Character/
+/[Aa]ssets/Character.meta
+/[Aa]ssets/Environment/
+/[Aa]ssets/Environment.meta
+/[Aa]ssets/TextMesh Pro/
+/[Aa]ssets/TextMesh Pro.meta
 
 # Ignore VR SDKs
 /[Aa]ssets/Oculus/
@@ -29,6 +36,8 @@
 /[Aa]ssets/XR/
 /[Aa]ssets/XR.meta
 
+# Ignore Snapshot
+/[Aa]ssets/Snapshot/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
