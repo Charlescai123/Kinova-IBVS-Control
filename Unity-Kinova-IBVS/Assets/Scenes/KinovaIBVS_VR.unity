@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6346,7 +6346,7 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 2
-  m_GateFitMode: 2
+  m_GateFitMode: 0
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -6604,7 +6604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f140733acace34587fc1511269757b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fK: {fileID: 0}
+  fK: {fileID: 816732730}
   numJoint: 6
   maxItreration: 20
   tolerancePosition: 0.01
@@ -8191,7 +8191,7 @@ GameObject:
   - component: {fileID: 1039172653}
   - component: {fileID: 1039172655}
   - component: {fileID: 1039172654}
-  - component: {fileID: 1039172656}
+  - component: {fileID: 1039172657}
   m_Layer: 0
   m_Name: MA Controller
   m_TagString: Untagged
@@ -8265,7 +8265,7 @@ MonoBehaviour:
   jointSpeed: 0.5
   linearSpeed: 0.2
   angularSpeed: 0.15
---- !u!114 &1039172656
+--- !u!114 &1039172657
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8274,7 +8274,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1039172652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33fe45a1c43984dd98e1d489d26cce1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 20528c4676784f345b52f6d8ac5da355, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   leftFingerChain:
@@ -8812,6 +8812,10 @@ PrefabInstance:
     - target: {fileID: 4833609494123293429, guid: a5af0ed6009716ed59db4484573a2a06, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.34
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215096441392656463, guid: a5af0ed6009716ed59db4484573a2a06, type: 3}
+      propertyPath: m_Name
+      value: ikea_desk1
       objectReference: {fileID: 0}
     - target: {fileID: 8187006626307717504, guid: a5af0ed6009716ed59db4484573a2a06, type: 3}
       propertyPath: m_RootOrder
@@ -14817,7 +14821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd50af2df76b5f4ebd75efe6f5158fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ManipulatorGripper: {fileID: 1039172656}
+  ManipulatorGripper: {fileID: 1039172657}
   TeleoperationOn: 0
   IsGripperOpen: 1
   jointRoot: {fileID: 2081010623}

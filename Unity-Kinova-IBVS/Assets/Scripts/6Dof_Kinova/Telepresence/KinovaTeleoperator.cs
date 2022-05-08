@@ -18,7 +18,7 @@ public class KinovaTeleoperator : MonoBehaviour
 
     // Articulation Bodies
     ArticulationBody[] MAJointArtiBodies;
-    public ArticulationGripperController ManipulatorGripper;
+    public GripperController ManipulatorGripper;
 
     public bool TeleoperationOn = false;
     public bool IsGripperOpen = true;

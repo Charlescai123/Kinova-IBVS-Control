@@ -1,6 +1,9 @@
 function res = optimization_Ss(Pcg, Pct, qc, dqc, pg, pt)
+    %Ref_pt = [520, 110]';
+    %Ref_pg = [180, 396]';
     Ref_pt = [1691.0, 302.0]';
     Ref_pg = [854.0, 1681.0]';
+
     qc = qc';
     dqc = dqc';
     pg = pg';

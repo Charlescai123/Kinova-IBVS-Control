@@ -8,7 +8,6 @@ namespace Kinova6Dof
     public class CameraCaptor : MonoBehaviour
     {
         // Object Capture Property
-        public int updateRate;
         public GameObject goal;
         public GameObject TCP;
         public GameObject obstacle;
@@ -59,18 +58,17 @@ namespace Kinova6Dof
                 lastGoalSegImgPixels[i] = Get2DImgPixel(VisualServoCam, goalCornerPoints[i]);
             }
 
-            // Call Function to update Data
-            InvokeRepeating("ImageCapture", 1f, 1 / updateRate);
         }
 
         // Update is called once per frame
         void Update()
         {
-            GetCameraParam();
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 TakeScreenShot(VisualServoCam, new Rect(0, 0, Screen.width, Screen.height));
             }
+            if (Input.GetKeyDown(KeyCode.E)) { GetCameraParam(); }
+
             var vel = Get2DImgPixelVel(VisualServoCam, TCP.transform);
         }
 
@@ -79,6 +77,9 @@ namespace Kinova6Dof
             UpdatePixelPerFrame();      // Update Img Pixel per frame
         }
 
+        /// <summary>
+        /// Update image pixel information
+        /// </summary>
         void UpdatePixelPerFrame()
         {
             lastGoalImgPixel = Get2DImgPixel(VisualServoCam, goal.transform);
@@ -140,7 +141,7 @@ namespace Kinova6Dof
         {
             Debug.Log("VS Camera Pixel Rect is:" + VisualServoCam.pixelRect);
             Debug.Log("VS Camera Projection Matrix (Intrinsic) is:" + VisualServoCam.projectionMatrix.ToString("f4"));
-            Debug.Log("VS Camera Projection Matrix (Extrinsic) is:" + VisualServoCam.worldToCameraMatrix.ToString("f4"));
+            //Debug.Log("VS Camera Projection Matrix (Extrinsic) is:" + VisualServoCam.worldToCameraMatrix.ToString("f4"));
         }
 
         /// <summary>
@@ -168,10 +169,6 @@ namespace Kinova6Dof
         public Vector2 Get2DImgPixelVel(Camera cam, Transform worldtf)
         {
             Vector2 vel = new Vector2(0, 0);
-            //Debug.Log("world tf:" + worldtf);
-            //Debug.Log("this.goal.tf:" + this.goal.transform);
-            //Debug.Log("this.TCP.tf:" + this.TCP.transform);
-            //Debug.Log("this.obsCenterPoint.tf:" + this.obsCenterPoint.transform);
 
             // Goal
             if (worldtf == this.goal.transform)

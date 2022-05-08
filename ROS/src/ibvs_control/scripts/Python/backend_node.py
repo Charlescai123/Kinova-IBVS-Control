@@ -8,7 +8,7 @@ import time
 
 from matplotlib.animation import FuncAnimation
 
-import optimization
+from optimization import *
 from ibvs_control.srv import OptimIBVS, OptimIBVSResponse, OptimIBVSRequest
 from std_msgs.msg import Float64
 
@@ -17,6 +17,7 @@ class BackendNode:
     def __init__(self) -> None:
         rospy.init_node('backend_ros_node')
         self.serv_states = rospy.Service('optim_ibvs', OptimIBVS, self.service_callback)
+        self.optimizer = StateMachineOptimizer()
         self.state = 'Ss'
         self.total_time = [time.process_time()]
         self.plot_goal1 = [0]
@@ -41,7 +42,6 @@ class BackendNode:
         line.set_data(self.total_time, self.plot_goal)
         # plt.plot(x, y, 'b*--', label='cosx')
 
-
         plt.title('plot curve', fontsize=25)  # 标题
         # plt.xlim(-1, 7)  # x轴范围
         # plt.ylim(-1.5, 1.5)  # y轴范围
@@ -56,8 +56,8 @@ class BackendNode:
         # continue
 
     def service_callback(self, req: OptimIBVSRequest):
-        qt = np.asarray([i.data for i in req.qt], dtype=np.float64)
-        dqt = np.asarray([i.data for i in req.dqt], dtype=np.float64)
+        qm = np.asarray([i.data for i in req.qm], dtype=np.float64)
+        dqm = np.asarray([i.data for i in req.dqm], dtype=np.float64)
         qc = np.asarray([i.data for i in req.qc], dtype=np.float64)
         dqc = np.asarray([i.data for i in req.dqc], dtype=np.float64)
         # print('qt\n', qt)
@@ -119,11 +119,9 @@ class BackendNode:
         print('State:', self.state)
         t1 = time.time()
         if self.state == 'Ss':
-            result = optimization.stateSs(qc, qt, dqc, dqt, pt, zt, pg, zg)[0]
-            e1 = np.linalg.norm(optimization.Ref_pt - pt)
-            e2 = np.linalg.norm(optimization.Ref_pg - pg)
-            self.plot_goal1.append(e1)
-            self.plot_goal2.append(e2)
+            result = self.optimizer.stateSs(qc, qm, dqc, dqm, pt, zt, pg, zg)[0]
+            e1 = np.linalg.norm(self.optimizer.ref_pt - pt)
+            e2 = np.linalg.norm(self.optimizer.ref_pg - pg)
 
             print('e1:', e1)
             print('e2:', e2)
@@ -131,12 +129,10 @@ class BackendNode:
                 self.state = 'Sa'
                 # phi_start = optimization.getPhiStart()
         elif self.state == 'Sa':
-            result = optimization.stateSa(qc, qt, dqc, dqt, pt, zt, pg, zg)[0]
-            e1 = np.linalg.norm(optimization.Ref_pt - pt)
-            e2 = np.linalg.norm(optimization.Ref_pg - pg)
+            result = self.optimizer.stateSa(qc, qm, dqc, dqm, pt, zt, pg, zg)[0]
+            e1 = np.linalg.norm(self.optimizer.ref_pt - pt)
+            e2 = np.linalg.norm(self.optimizer.ref_pg - pg)
 
-            self.plot_goal1.append(e1)
-            self.plot_goal2.append(e2)
             print('e1:', e1)
             print('e2:', e2)
             print(area_g)
@@ -145,17 +141,17 @@ class BackendNode:
             if area_o == 1.0:
                 self.state = 'So'
         elif self.state == 'Sc':
-            result = optimization.stateSc(qc, qt, dqc, dqt, pg, zg, pg_seg)[0]
-            e1 = np.linalg.norm(optimization.Ref_pg - pg)
+            result = self.optimizer.stateSc(qc, qm, dqc, dqm, pg, zg, pg_seg)[0]
+            e1 = np.linalg.norm(self.optimizer.ref_pg - pg)
             print('e1:', e1)
-            if pg[0] > optimization.RESOLUTION[0] or pg[1] > optimization.RESOLUTION[1]:
+            if pg[0] > RESOLUTION[0] or pg[1] > RESOLUTION[1]:
                 self.state = 'Ss'
             # if area_o == 0.0:
             #      self.state = 'So'
         elif self.state == 'So':
-            result = optimization.stateSo(qc, qt, dqc, dqt, pt, zt, pg, zg, po, zo, po_seg)[0]
-            e1 = np.linalg.norm(optimization.Ref_po - po)
-            e2 = np.linalg.norm(optimization.Ref_pg - pg)
+            result = self.optimizer.stateSo(qc, qm, dqc, dqm, pt, zt, pg, zg, po, zo, po_seg)[0]
+            e1 = np.linalg.norm(self.optimizer.ref_po - po)
+            e2 = np.linalg.norm(self.optimizer.ref_pg - pg)
             # print(po)
             print('e1:', e1)
             print('e2:', e2)
@@ -172,17 +168,6 @@ class BackendNode:
         response = OptimIBVSResponse()
         response.dqc_next = [Float64(i) for i in result]  # list(np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])) result
 
-        fig = plt.figure(figsize=(10, 5))
-
-        current_time = time.process_time()
-        cost_time = current_time - self.total_time[-1]
-        self.total_time.append(current_time)
-
-        print("time:"+str(self.total_time))
-        print("err:"+str(self.plot_goal1))
-        print("err:"+str(self.plot_goal2))
-        if len(self.plot_goal1) == 100:
-            exit(0)
         # self.plot_evaluation()
 
         return response

@@ -11,8 +11,7 @@
 /[Uu]ser[Ss]ettings/
 /[Pp]ackages/
 /[Pp]rojectSettings/
-/[Aa]ssets/[Rr]os[Mm]essages/
-/[Aa]ssets/[Rr]os[Mm]essages.meta
+
 
 # Ignore some unnecessary parts
 /[Aa]ssets/Audio/
@@ -23,6 +22,14 @@
 /[Aa]ssets/Environment.meta
 /[Aa]ssets/TextMesh Pro/
 /[Aa]ssets/TextMesh Pro.meta
+/[Aa]ssets/Scripts/Robot/
+/[Aa]ssets/Scripts/Robot.meta
+/[Aa]ssets/Scripts/Sensors/
+/[Aa]ssets/Scripts/Sensors.meta
+/[Aa]ssets/Scripts/Unity/
+/[Aa]ssets/Scripts/Unity.meta
+/[Aa]ssets/[Rr]os[Mm]essages/
+/[Aa]ssets/[Rr]os[Mm]essages.meta
 
 # Ignore VR SDKs
 /[Aa]ssets/Oculus/
@@ -38,6 +45,7 @@
 
 # Ignore Snapshot
 /[Aa]ssets/Snapshot/
+/[Aa]ssets/Snapshot.meta
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
