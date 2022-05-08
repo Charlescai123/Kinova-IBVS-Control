@@ -17,7 +17,7 @@ public class KeyboardControl : MonoBehaviour
     private int jointLength;
 
     // Controllers
-    private ArticulationGripperController gripperController;
+    private GripperController gripperController;
     public Kinova6DofController jointController;
     public Kinova6DofIK iK;
 

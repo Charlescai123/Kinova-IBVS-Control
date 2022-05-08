@@ -22,6 +22,10 @@
 /[Aa]ssets/Environment.meta
 /[Aa]ssets/TextMesh Pro/
 /[Aa]ssets/TextMesh Pro.meta
+/[Aa]ssets/Scripts/Interface/
+/[Aa]ssets/Scripts/Interface.meta
+/[Aa]ssets/Scripts/ROSCommunication/
+/[Aa]ssets/Scripts/ROSCommunication.meta
 /[Aa]ssets/Scripts/Robot/
 /[Aa]ssets/Scripts/Robot.meta
 /[Aa]ssets/Scripts/Sensors/
