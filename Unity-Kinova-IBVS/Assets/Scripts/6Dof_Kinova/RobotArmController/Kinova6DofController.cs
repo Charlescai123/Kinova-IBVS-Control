@@ -51,24 +51,6 @@ namespace Kinova6Dof
             HomeJoints();
         }
 
-        void Update()
-        {
-
-            //if (Input.GetKeyDown(KeyCode.N))
-            //{
-            //    test ^= true;
-            //}
-            //if (test)
-            //{
-            //    var wtf = articulationChain[0].xDrive;
-            //    wtf.target += 1.2f;
-            //    articulationChain[0].xDrive = wtf;
-            //}
-            //var wtf1 = articulationChain[0].xDrive;
-            //Debug.Log("target:" + wtf1.target);
-
-        }
-
         public void HomeJoints()
         {
             for (int i = 0; i < homeFinFlag.Length; i++)
@@ -97,7 +79,8 @@ namespace Kinova6Dof
             {
                 if (homeFinFlag[i] == false)
                 {
-                    Debug.Log("Fails to home Joint Configuration of " + i);
+                    //Debug.Log("Failed to home Joint Configuration of " + i);
+                    Debug.Log("Homing the Joint[" + i + "] Configuration now...");
                     return false;
                 }
             }
@@ -121,6 +104,8 @@ namespace Kinova6Dof
                 else if (target < drive.lowerLimit)
                     target = drive.lowerLimit;
             }
+            //Set stiffness
+            drive.stiffness = stiffness;
 
             // Set target
             drive.target = target;
@@ -201,14 +186,14 @@ namespace Kinova6Dof
 
         public void StopAllJoint(ArticulationBody[] joint)
         {
-            for(int i = 0; i < joint.Length; i++)
+            for (int i = 0; i < joint.Length; i++)
             {
                 var drive = joint[i].xDrive;
                 float currPosition = joint[i].jointPosition[0] * Mathf.Rad2Deg;
                 drive.target = currPosition;
                 drive.targetVelocity = 0;
                 drive.stiffness = stiffness;        // Set value from 0 to original settings
-                joint[i].xDrive = drive;               
+                joint[i].xDrive = drive;
             }
         }
 
@@ -276,26 +261,6 @@ namespace Kinova6Dof
 
                 joint.xDrive = drive;
             }
-        }
-
-        public void Jacobian(Vector3 endEffectPos, Vector3 endEffectRot)
-        {
-            var w_s1 = new Vector3(0, 0, -1);
-            var w_s2 = new Vector3(0, 1, 0);
-            var w_s3 = new Vector3(0, -1, 0);
-            var w_s4 = new Vector3(0, 0, -1);
-            var w_s5 = new Vector3(0, -1, 0);
-            var w_s6 = new Vector3(0, 0, -1);
-
-            var p_s1 = new Vector3(0, 0, 0);
-            var p_s2 = new Vector3(0, 0, 0.2848f);
-            var p_s3 = new Vector3(0, 0, 0.6948f);
-            var p_s4 = new Vector3(0, 0.001f, 0);
-            var p_s5 = new Vector3(0, 0, 0.3804f);
-            var p_s6 = new Vector3(0, 0.001f, 0);
-
-            
-
         }
     }
 }

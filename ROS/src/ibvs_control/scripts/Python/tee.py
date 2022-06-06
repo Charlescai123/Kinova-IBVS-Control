@@ -2,6 +2,8 @@ from copy import copy, deepcopy
 from typing import Tuple
 
 import numpy
+import robot_model as model
+import file_reader as reader
 import numpy as np
 from math import *
 
@@ -64,10 +66,23 @@ DH_Param_All = np.array([[0, 0, 0, pi],
                          [-pi / 2, -0.006375, 0, pi / 2],
                          [pi, -0.31436, 0, pi / 2],
                          [pi, 0, 0, pi / 2],
-                         [pi/2, -0.15593, 0.06, pi]])
+                         [pi / 2, -0.15593, 0.06, pi]])
 
 S = get_twist(DH_Param)
 M = get_homeTrans(DH_Param_All)
 
 print(S)
 print(M)
+a = np.array([])
+print(a)
+
+pos_limit, vel_limit = reader.joint_limit_load()
+print(type(pos_limit))
+print(pos_limit)
+print(vel_limit)
+
+Q_MIN = np.array([-np.pi, -2.41, -2.66, -np.pi, -2.23, -np.pi])
+Q_MAX = np.array([np.pi, 2.41, 2.66, np.pi, 2.23, np.pi])
+Q_LIMIT = np.vstack((Q_MIN, Q_MAX))
+print(type(Q_LIMIT))
+print(Q_LIMIT)

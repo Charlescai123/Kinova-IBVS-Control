@@ -63,11 +63,19 @@ namespace Kinova6Dof
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            // Press Space to take screenshot
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 TakeScreenShot(VisualServoCam, new Rect(0, 0, Screen.width, Screen.height));
             }
-            if (Input.GetKeyDown(KeyCode.E)) { GetCameraParam(); }
+            // Press C to display Visual Servoing Camera Parameters
+            if (Input.GetKeyDown(KeyCode.C)) { GetCameraParam(); }
+
+            // Mouse right click to obtain pixel info on image
+            if (Input.GetMouseButtonDown(1))
+            {
+                Debug.Log("Mouse Input Point Pixel on Image: Width:" + Input.mousePosition.x + ", Height:" + Input.mousePosition.y);
+            }
 
             var vel = Get2DImgPixelVel(VisualServoCam, TCP.transform);
         }
@@ -139,6 +147,8 @@ namespace Kinova6Dof
         /// </summary>
         public void GetCameraParam()
         {
+            Debug.Log("Shift:" + VisualServoCam.lensShift.x);
+            Debug.Log("Shift:" + VisualServoCam.lensShift.y);
             Debug.Log("VS Camera Pixel Rect is:" + VisualServoCam.pixelRect);
             Debug.Log("VS Camera Projection Matrix (Intrinsic) is:" + VisualServoCam.projectionMatrix.ToString("f4"));
             //Debug.Log("VS Camera Projection Matrix (Extrinsic) is:" + VisualServoCam.worldToCameraMatrix.ToString("f4"));
@@ -146,7 +156,7 @@ namespace Kinova6Dof
 
         /// <summary>
         /// Used for mapping 3D object transform to 2D image transform
-        /// (Pixel coordinate origin is set at left above of the whole image)
+        /// (Pixel coordinate origin is set at top left of the whole image)
         /// </summary>
         public Vector3 Get2DImgPixel(Camera cam, Transform worldtf)
         {
@@ -157,7 +167,7 @@ namespace Kinova6Dof
             Vector3 ndcPos = new Vector3(projPos.x / projPos.w, projPos.y / projPos.w, projPos.z / projPos.w);
             Vector3 viewportPos = new Vector3(ndcPos.x * 0.5f + 0.5f, ndcPos.y * 0.5f + 0.5f, -camViewPos.z);
             var u = viewportPos.x * cam.pixelWidth;
-            var v = cam.pixelHeight - viewportPos.y * cam.pixelHeight;  // Origin set to be left-up corner
+            var v = cam.pixelHeight - viewportPos.y * cam.pixelHeight;  // Origin set to top-left corner
             var depth = viewportPos.z;
             return new Vector3(u, v, depth);
         }

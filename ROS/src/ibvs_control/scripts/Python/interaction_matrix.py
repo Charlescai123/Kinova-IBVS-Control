@@ -1,4 +1,3 @@
-from ast import In
 import numpy as np
 
 # def getIM(s:np.ndarray, z):
@@ -12,10 +11,10 @@ import numpy as np
 [u v]' = Mat_intrinsics_ @ [Xc_ Yc_ Zc_]'
 Mat_intrinsics @ [Xc Yc Zc]' = Mat_intrinsics_ @ [Xc_ Yc_ Zc_]'
 '''
-# Mat_intrinsics = np.array([[640, 0], [0, 480]]) @ np.array([[1.11111, 0, 0.5],
-#                                                             [0, 1.48148, 0.5]])
-Mat_intrinsics = np.array([[2064, 0], [0.0, 2096]]) @ np.array([[1.0941, 0, 0.5],
-                                                                [0, 1.1111, 0.5]])
+Mat_intrinsics = np.array([[640, 0], [0, 480]]) @ np.array([[1.11111, 0, 0.5],
+                                                            [0, 1.48148, 0.5]])
+Mat_intrinsics = np.array([[2064, 0], [0, 2096]]) @ np.array([[1.0941 / 2, 0, 0.5],
+                                                              [0, 1.1111 / 2, 0.5]])
 
 fx = Mat_intrinsics[0][0]
 fy = Mat_intrinsics[1][1]
@@ -27,7 +26,10 @@ Get Interaction Matrix
 '''
 
 
-def getIM(s: np.ndarray, z):
+# global fx, fy, cx, cy
+
+
+def getIM(s: np.ndarray, z) -> np.ndarray:
     x, y = s
     IM = np.array(
         [[(x - cx) * (y - cy) / fy, -(fx ** 2 + (x - cx) ** 2) / fx, (y - cy) * fx / fy, -fx / z, 0, (x - cx) / z],

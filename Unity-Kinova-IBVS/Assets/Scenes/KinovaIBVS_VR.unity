@@ -958,6 +958,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2062446064}
   - {fileID: 1421779386}
   - {fileID: 1778105955}
   m_Father: {fileID: 81509807}
@@ -1121,7 +1122,7 @@ GameObject:
   - component: {fileID: 160432574}
   - component: {fileID: 160432573}
   m_Layer: 0
-  m_Name: Base_Link
+  m_Name: CA/Base_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1256,6 +1257,8 @@ Transform:
   m_Children:
   - {fileID: 1805582804}
   - {fileID: 1063234318}
+  - {fileID: 1640353176}
+  - {fileID: 872737508}
   m_Father: {fileID: 88689383}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1453,6 +1456,8 @@ Transform:
   m_Children:
   - {fileID: 446524076}
   - {fileID: 993547681}
+  - {fileID: 1258489248}
+  - {fileID: 1298073957}
   m_Father: {fileID: 398328085}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4712,7 +4717,7 @@ GameObject:
   - component: {fileID: 684138084}
   - component: {fileID: 684138083}
   m_Layer: 0
-  m_Name: Shoulder_Link
+  m_Name: MA/Shoulder_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5238,7 +5243,7 @@ GameObject:
   - component: {fileID: 705493090}
   - component: {fileID: 705493089}
   m_Layer: 0
-  m_Name: Bicep_Link
+  m_Name: CA/Bicep_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5947,7 +5952,7 @@ GameObject:
   - component: {fileID: 768839443}
   - component: {fileID: 768839442}
   m_Layer: 0
-  m_Name: Shoulder_Link
+  m_Name: CA/Shoulder_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6127,7 +6132,7 @@ GameObject:
   - component: {fileID: 793658665}
   - component: {fileID: 793658664}
   m_Layer: 0
-  m_Name: Bicep_Link
+  m_Name: MA/Bicep_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6306,7 +6311,7 @@ GameObject:
   - component: {fileID: 804196688}
   - component: {fileID: 804196687}
   m_Layer: 0
-  m_Name: Camera View
+  m_Name: Visual Serving Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6512,6 +6517,7 @@ GameObject:
   - component: {fileID: 816732729}
   - component: {fileID: 816732731}
   - component: {fileID: 816732730}
+  - component: {fileID: 816732732}
   m_Layer: 0
   m_Name: Kinematic Solver
   m_TagString: Untagged
@@ -6546,6 +6552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numJoint: 6
+  model: {fileID: 816732732}
   alpha:
   - 3.1415927
   - 1.5707964
@@ -6592,6 +6599,23 @@ MonoBehaviour:
   - 0
   - 2.1
   - 0
+  M:
+    e00: 0
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 0
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 0
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 0
 --- !u!114 &816732731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6604,11 +6628,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f140733acace34587fc1511269757b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fK: {fileID: 816732730}
   numJoint: 6
-  maxItreration: 20
+  fK: {fileID: 816732730}
+  model: {fileID: 816732732}
+  controller: {fileID: 1039172654}
+  NR_Iterations: 1000
+  CCD_Itreration: 20
   tolerancePosition: 0.01
   toleranceRotation: 0.0872665
+--- !u!114 &816732732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 816732728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93f323d0650273946a018bc14e99f408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &830359323 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2101311687151090557, guid: 7b7705c20abcd0e47aa8a9eb1eaa86ba, type: 3}
@@ -6881,6 +6920,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0abdd77712724b409bdd185b622ac7c, type: 3}
+--- !u!1 &872737507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 872737508}
+  m_Layer: 0
+  m_Name: OVRRuntimeControllerPrefab (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &872737508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 872737507}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 161753433}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &874848857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7092,7 +7161,7 @@ GameObject:
   - component: {fileID: 907611292}
   - component: {fileID: 907611291}
   m_Layer: 0
-  m_Name: Bracelet_Link
+  m_Name: CA/Bracelet_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8189,7 +8258,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1039172653}
-  - component: {fileID: 1039172655}
   - component: {fileID: 1039172654}
   - component: {fileID: 1039172657}
   m_Layer: 0
@@ -8246,25 +8314,6 @@ MonoBehaviour:
   stiffness: 10000
   damping: 10000
   forceLimit: 1000
---- !u!114 &1039172655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039172652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 026a27351308da94b9d065ca081ef2b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jointRoot: {fileID: 2081010623}
-  endEffector: {fileID: 705393466}
-  jointController: {fileID: 1039172654}
-  iK: {fileID: 816732731}
-  jointSpeed: 0.5
-  linearSpeed: 0.2
-  angularSpeed: 0.15
 --- !u!114 &1039172657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8285,6 +8334,7 @@ MonoBehaviour:
   - {fileID: 1528735793}
   - {fileID: 687068118}
   - {fileID: 996937813}
+  gripperStatus: 0
   closeValue: 48
   openValue: 0
 --- !u!1 &1048839608
@@ -8509,7 +8559,7 @@ GameObject:
   - component: {fileID: 1069000267}
   - component: {fileID: 1069000266}
   m_Layer: 0
-  m_Name: SphericalWrist2_Link
+  m_Name: MA/SphericalWrist2_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9014,7 +9064,7 @@ GameObject:
   - component: {fileID: 1156672358}
   - component: {fileID: 1156672357}
   m_Layer: 0
-  m_Name: SphericalWrist1_Link
+  m_Name: CA/SphericalWrist1_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9691,7 +9741,7 @@ GameObject:
   - component: {fileID: 1252380700}
   - component: {fileID: 1252380699}
   m_Layer: 0
-  m_Name: ForeArm_Link
+  m_Name: CA/ForeArm_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9813,6 +9863,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBaseLink: 0
+--- !u!1 &1258489247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1258489248}
+  m_Layer: 0
+  m_Name: OVRRuntimeControllerPrefab (Missing Prefab)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1258489248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258489247}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 190068613}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1259085080
 GameObject:
   m_ObjectHideFlags: 8
@@ -10155,6 +10235,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBaseLink: 0
+--- !u!1 &1298073956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1298073957}
+  m_Layer: 0
+  m_Name: Missing Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1298073957
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298073956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 190068613}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1304784477
 GameObject:
   m_ObjectHideFlags: 8
@@ -11164,7 +11274,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 122162061}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1421779387
 MonoBehaviour:
@@ -12431,6 +12541,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   geometryType: 3
+--- !u!1 &1640353175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1640353176}
+  m_Layer: 0
+  m_Name: Missing Prefab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1640353176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640353175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 161753433}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1640573781
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13423,7 +13563,7 @@ GameObject:
   - component: {fileID: 1701945037}
   - component: {fileID: 1701945036}
   m_Layer: 0
-  m_Name: SphericalWrist1_Link
+  m_Name: MA/SphericalWrist1_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13810,7 +13950,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1778105955}
   - component: {fileID: 1778105956}
-  - component: {fileID: 1778105957}
   m_Layer: 0
   m_Name: Camera Capture
   m_TagString: Untagged
@@ -13830,7 +13969,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 122162061}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1778105956
 MonoBehaviour:
@@ -13844,7 +13983,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd3e85f857e4aa439bbebd051ab9389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateRate: 20
   goal: {fileID: 1654251826}
   TCP: {fileID: 705393466}
   obstacle: {fileID: 983074931}
@@ -13853,24 +13991,6 @@ MonoBehaviour:
   obsCornerPoints: []
   goalCenterPoint: {fileID: 0}
   goalCornerPoints: []
---- !u!114 &1778105957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1778105954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da4aaf2ffbecb0b449199fc437383ed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RosServiceName: optim_ibvs
-  ROSUpdateRate: 20
-  MAJointRoot: {fileID: 2081010623}
-  CAJointRoot: {fileID: 160432571}
-  CAController: {fileID: 1421779387}
-  camCaptor: {fileID: 1778105956}
 --- !u!1 &1784741265
 GameObject:
   m_ObjectHideFlags: 0
@@ -14161,7 +14281,7 @@ GameObject:
   - component: {fileID: 1835746020}
   - component: {fileID: 1835746019}
   m_Layer: 0
-  m_Name: ForeArm_Link
+  m_Name: MA/ForeArm_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14818,12 +14938,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1936833525}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecd50af2df76b5f4ebd75efe6f5158fd, type: 3}
+  m_Script: {fileID: 11500000, guid: 8be54bd1cea566548b7adb380f7aca05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ManipulatorGripper: {fileID: 1039172657}
   TeleoperationOn: 0
-  IsGripperOpen: 1
   jointRoot: {fileID: 2081010623}
   endEffector: {fileID: 705393466}
   MAJointController: {fileID: 1039172654}
@@ -14843,7 +14962,7 @@ GameObject:
   - component: {fileID: 1961364757}
   - component: {fileID: 1961364756}
   m_Layer: 8
-  m_Name: RightArm_EndEffector_Link
+  m_Name: MA/RightArm_EndEffector_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15356,7 +15475,7 @@ GameObject:
   - component: {fileID: 2034037922}
   - component: {fileID: 2034037921}
   m_Layer: 0
-  m_Name: Bracelet_Link
+  m_Name: MA/Bracelet_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15478,6 +15597,55 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBaseLink: 0
+--- !u!1 &2062446063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2062446064}
+  - component: {fileID: 2062446065}
+  m_Layer: 0
+  m_Name: ROS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2062446064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062446063}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 122162061}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2062446065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2062446063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4aaf2ffbecb0b449199fc437383ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RosServiceName: optim_ibvs
+  ROSUpdateRate: 20
+  MAJointRoot: {fileID: 2081010623}
+  CAJointRoot: {fileID: 160432571}
+  CAController: {fileID: 1421779387}
+  camCaptor: {fileID: 1778105956}
 --- !u!1 &2066904859
 GameObject:
   m_ObjectHideFlags: 0
@@ -15492,7 +15660,7 @@ GameObject:
   - component: {fileID: 2066904862}
   - component: {fileID: 2066904861}
   m_Layer: 0
-  m_Name: SphericalWrist2_Link
+  m_Name: CA/SphericalWrist2_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15627,7 +15795,7 @@ GameObject:
   - component: {fileID: 2081010626}
   - component: {fileID: 2081010625}
   m_Layer: 0
-  m_Name: Base_Link
+  m_Name: MA/Base_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

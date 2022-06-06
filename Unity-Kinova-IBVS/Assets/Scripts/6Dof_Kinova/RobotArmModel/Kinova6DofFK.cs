@@ -6,11 +6,12 @@ namespace Kinova6Dof
 {
     public class Kinova6DofFK : MonoBehaviour
     {
+        public int numJoint = 6;
+        [HideInInspector] public RobotModelTool model;
         private const float PI = Mathf.PI;
         // DH parameters
-        // params has length of numJoint+1
+        // params has length of numJoint + 1
         // world -> joint 1 -> ... -> end effector
-        public int numJoint = 6;
         public float[] alpha = new float[] { PI, PI / 2, PI, PI / 2, PI / 2, PI / 2, PI };
         public float[] a = new float[] { 0, 0, 0.41f, 0, 0, 0, 0 };
         public float[] d = new float[] { 0, -0.28481f, -0.005375f, -0.006375f, -0.31436f, 0, -0.28743f };
@@ -23,13 +24,17 @@ namespace Kinova6Dof
         // Homogeneous Transformation Matrix
         private Matrix4x4[] initH;
         private Matrix4x4[] HT;
+        [HideInInspector] public Matrix4x4 M;
 
-        // Joints position and rotation
+        // Joints position and rotation in real-time
         private Vector3[] jointPositions;
         private Quaternion[] jointRotations;
 
         void Start()
         {
+            M = model.GetHomoMatrix(initialTheta, d, a, alpha);
+            //Debug.LogError(M);
+
             theta = (float[])initialTheta.Clone();
 
             // Initialize homogeneous matrices
@@ -50,13 +55,13 @@ namespace Kinova6Dof
             // Initialize joint positions and rotations
             jointPositions = new Vector3[numJoint + 1];
             jointRotations = new Quaternion[numJoint + 1];
+
             UpdateAllHT(new float[] { 0f, 0f, 0f, 0f, 0f, 0f, 0f });
         }
 
-        void Update()
-        {
-        }
-
+        /// <summary>
+        /// Update HT Matrix with Joint Angle 
+        /// </summary>
         public void UpdateOneHT(int i, float q)
         {
             /* Compute homography transformation matrix
@@ -82,6 +87,11 @@ namespace Kinova6Dof
             // Update joint positions and rotations
             UpdateAllJointPose();
         }
+
+
+        /// <summary>
+        /// Update All HT Matrices with Joint Angles
+        /// </summary>
         public void UpdateAllHT(float[] jointAngles)
         {
             /* Compute homogeneous transformation matrices
@@ -96,6 +106,9 @@ namespace Kinova6Dof
             UpdateAllJointPose();
         }
 
+        /// <summary>
+        /// Update All Joint Configuration according to HT Matrix
+        /// </summary>
         public void UpdateAllJointPose()
         {
             // Compute T from base to end effector
@@ -105,6 +118,7 @@ namespace Kinova6Dof
                 T_End = T_End * HT[i];
                 jointPositions[i] = new Vector3(T_End[0, 3], T_End[1, 3], T_End[2, 3]);
                 jointRotations[i] = T_End.rotation;
+                //Debug.Log("T[" + i + "] is:" + T_End);
             }
         }
 
@@ -134,11 +148,17 @@ namespace Kinova6Dof
                 return (jointPositions, jointRotations);
         }
 
-        // Convert to Unity coordinate
+        /// <summary>
+        /// Convert from ROS coordinate to Unity (Position)
+        /// </summary>
         private Vector3 ToRUF(Vector3 p)
         {
             return new Vector3(-p.y, p.z, p.x);
         }
+
+        /// <summary>
+        /// Convert from ROS coordinate to Unity (Orientation)
+        /// </summary>
         private Quaternion ToRUF(Quaternion q)
         {
             return new Quaternion(-q.y, q.z, q.x, -q.w);

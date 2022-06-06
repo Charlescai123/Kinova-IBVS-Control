@@ -21,7 +21,6 @@ public class KinovaTeleoperator : MonoBehaviour
     public GripperController ManipulatorGripper;
 
     public bool TeleoperationOn = false;
-    public bool IsGripperOpen = true;
 
     private Vector3 lastPosition;
     private Vector3 lastPositionForCalc;
@@ -89,39 +88,39 @@ public class KinovaTeleoperator : MonoBehaviour
     // Fixed Update
     void FixedUpdate()
     {
-        deltaPosition = Vector3.zero;
-        float delta = 0.01f; // 0.05 sample size
+        //deltaPosition = Vector3.zero;
+        //float delta = 0.01f; // 0.05 sample size
 
-        // x -> unity coordinate
-        if (Input.GetKey(KeyCode.J))
-        {
-            deltaPosition += new Vector3(0, 0, delta);
-        }
-        else if (Input.GetKey(KeyCode.L))
-        {
-            deltaPosition += new Vector3(0, 0, -delta);
-        }
-        // y -> unity coordinate
-        if (Input.GetKey(KeyCode.K))
-        {
-            deltaPosition += new Vector3(-delta, 0, 0);
-        }
-        else if (Input.GetKey(KeyCode.I))
-        {
-            deltaPosition += new Vector3(delta, 0, 0);
-        }
-        if (deltaPosition != Vector3.zero)
-        {
-            prevRotation = endEffector.transform.rotation;
-            prevPosition = endEffector.transform.position;
-            float[] newJoints = IKSolver(MAJointArtiBodies, deltaPosition, Vector3.zero);
-            for (int i = 0; i < newJoints.Length; ++i)
-            {
-                Debug.Log("newJoint[" + i + "]:" + newJoints[i] * Mathf.Rad2Deg);
-                //jointController.SetJointTarget(MAJointArtiBodies[i], newJoints[i]);
-            }
-            //AllJointGo(MAJointArtiBodies, newJoints);
-        }
+        //// x -> unity coordinate
+        //if (Input.GetKey(KeyCode.J))
+        //{
+        //    deltaPosition += new Vector3(0, 0, delta);
+        //}
+        //else if (Input.GetKey(KeyCode.L))
+        //{
+        //    deltaPosition += new Vector3(0, 0, -delta);
+        //}
+        //// y -> unity coordinate
+        //if (Input.GetKey(KeyCode.K))
+        //{
+        //    deltaPosition += new Vector3(-delta, 0, 0);
+        //}
+        //else if (Input.GetKey(KeyCode.I))
+        //{
+        //    deltaPosition += new Vector3(delta, 0, 0);
+        //}
+        //if (deltaPosition != Vector3.zero)
+        //{
+        //    prevRotation = endEffector.transform.rotation;
+        //    prevPosition = endEffector.transform.position;
+        //    float[] newJoints = IKSolver(MAJointArtiBodies, deltaPosition, Vector3.zero);
+        //    for (int i = 0; i < newJoints.Length; ++i)
+        //    {
+        //        Debug.Log("newJoint[" + i + "]:" + newJoints[i] * Mathf.Rad2Deg);
+        //        //jointController.SetJointTarget(MAJointArtiBodies[i], newJoints[i]);
+        //    }
+        //    //AllJointGo(MAJointArtiBodies, newJoints);
+        //}
     }
 
     private void LateUpdate()
@@ -187,12 +186,10 @@ public class KinovaTeleoperator : MonoBehaviour
         // Open/Close Gripper
         if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
-            if (!IsGripperOpen)
+            if (ManipulatorGripper.gripperStatus == GripperStatus.Close)
                 ManipulatorGripper.OpenGrippers();
             else
                 ManipulatorGripper.CloseGrippers();
-            // Reverse the Gripper State Flag
-            IsGripperOpen ^= true;
         }
 
         Debug.Log("Teleoperating!!!");
@@ -235,12 +232,10 @@ public class KinovaTeleoperator : MonoBehaviour
         // Open/Close Gripper
         if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
         {
-            if (!IsGripperOpen)
+            if (ManipulatorGripper.gripperStatus == GripperStatus.Close)
                 ManipulatorGripper.OpenGrippers();
             else
                 ManipulatorGripper.CloseGrippers();
-            // Reverse the Gripper State Flag
-            IsGripperOpen ^= true;
         }
 
         var deltaPos = pos - lastPositionForCalc;
@@ -300,7 +295,7 @@ public class KinovaTeleoperator : MonoBehaviour
     }
 
 
-    /***************************** Robot Arm Highlight *****************************/
+    /***************************** Robot Arm Joint Highlight *****************************/
     private void Highlight(ArticulationBody[] body, int selectedIndex)
     {
         if (selectedIndex < 0 || selectedIndex >= body.Length)

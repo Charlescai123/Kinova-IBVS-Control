@@ -13,10 +13,12 @@ namespace RosMessageTypes.IbvsControl
         public const string k_RosMessageName = "ibvs_control/OptimIBVS";
         public override string RosMessageName => k_RosMessageName;
 
+        public CameraParamMsg cam_param;
+        //  camera parameters
         public Std.Float64Msg[] qc;
         //  camera-arm joint position (array of length 6)
         public Std.Float64Msg[] dqc;
-        //  camera-arm joint velocity ((array of length 6)
+        //  camera-arm joint velocity (array of length 6)
         public Std.Float64Msg[] qm;
         //  manipulator-arm joint position (array of length 6)
         public Std.Float64Msg[] dqm;
@@ -38,6 +40,7 @@ namespace RosMessageTypes.IbvsControl
 
         public OptimIBVSRequest()
         {
+            this.cam_param = new CameraParamMsg();
             this.qc = new Std.Float64Msg[0];
             this.dqc = new Std.Float64Msg[0];
             this.qm = new Std.Float64Msg[0];
@@ -51,8 +54,9 @@ namespace RosMessageTypes.IbvsControl
             this.po_seg = new PointOnImgMsg[0];
         }
 
-        public OptimIBVSRequest(Std.Float64Msg[] qc, Std.Float64Msg[] dqc, Std.Float64Msg[] qm, Std.Float64Msg[] dqm, PointOnImgMsg pt, PointOnImgMsg pg, PointOnImgMsg po, Std.Float64Msg area_g, Std.Float64Msg area_o, PointOnImgMsg[] pg_seg, PointOnImgMsg[] po_seg)
+        public OptimIBVSRequest(CameraParamMsg cam_param, Std.Float64Msg[] qc, Std.Float64Msg[] dqc, Std.Float64Msg[] qm, Std.Float64Msg[] dqm, PointOnImgMsg pt, PointOnImgMsg pg, PointOnImgMsg po, Std.Float64Msg area_g, Std.Float64Msg area_o, PointOnImgMsg[] pg_seg, PointOnImgMsg[] po_seg)
         {
+            this.cam_param = cam_param;
             this.qc = qc;
             this.dqc = dqc;
             this.qm = qm;
@@ -70,6 +74,7 @@ namespace RosMessageTypes.IbvsControl
 
         private OptimIBVSRequest(MessageDeserializer deserializer)
         {
+            this.cam_param = CameraParamMsg.Deserialize(deserializer);
             deserializer.Read(out this.qc, Std.Float64Msg.Deserialize, deserializer.ReadLength());
             deserializer.Read(out this.dqc, Std.Float64Msg.Deserialize, deserializer.ReadLength());
             deserializer.Read(out this.qm, Std.Float64Msg.Deserialize, deserializer.ReadLength());
@@ -85,6 +90,7 @@ namespace RosMessageTypes.IbvsControl
 
         public override void SerializeTo(MessageSerializer serializer)
         {
+            serializer.Write(this.cam_param);
             serializer.WriteLength(this.qc);
             serializer.Write(this.qc);
             serializer.WriteLength(this.dqc);
@@ -107,6 +113,7 @@ namespace RosMessageTypes.IbvsControl
         public override string ToString()
         {
             return "OptimIBVSRequest: " +
+            "\ncam_param: " + cam_param.ToString() +
             "\nqc: " + System.String.Join(", ", qc.ToList()) +
             "\ndqc: " + System.String.Join(", ", dqc.ToList()) +
             "\nqm: " + System.String.Join(", ", qm.ToList()) +

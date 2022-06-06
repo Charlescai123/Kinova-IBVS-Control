@@ -1,27 +1,26 @@
 from typing import Tuple
 
 import numpy as np
+import file_reader as reader
 from math import *
 
-# DH Parameter of Camera Arm Joint
-DH_CAMERA_JOINT = np.array([[0, 0, 0, pi],
-                            [0, -0.28481, 0, pi / 2],
-                            [-pi / 2, -0.005375, 0.41, pi],
-                            [-pi / 2, -0.006375, 0, pi / 2],
-                            [pi, -0.31436, 0, pi / 2],
-                            [pi, 0, 0, pi / 2]])
+'''
+DH Parameter of Camera Arm Joint
+'''
+DH_CAMERA, DH_CAMERA_JOINT, JOINT_TO_END_EFFECTOR = reader.DH_load()
 
-CAMERA_TO_END_EFFECTOR = np.array([pi / 2, -0.15593, 0.06, pi])
-
-DH_CAMERA = np.vstack((DH_CAMERA_JOINT, CAMERA_TO_END_EFFECTOR))
+'''
+Camera Joint Position/Velocity limit
+'''
+Q_LIMIT, DQ_LIMIT = reader.joint_limit_load()
 
 
 class RobotModel:
-    def __init__(self, jointDH: np.ndarray, DH: np.ndarray):
-        self.jointDH = jointDH
-        self.DH = DH
-        self.Mat_S_space = get_twist(self.jointDH)  # Skew Matrix in Space Frame
+    def __init__(self, _DH: np.ndarray, _jointDH: np.ndarray):
+        self.DH = _DH
+        self.jointDH = _jointDH
         self.Mat_M = get_homeTrans(self.DH)  # Homogeneous Transform Matrix M
+        self.Mat_S_space = get_twist(self.jointDH)  # Skew Matrix in Space Frame
 
 
 '''Robot Model Calc Function
@@ -103,14 +102,12 @@ def twist2Trans(S: np.ndarray, theta) -> np.ndarray:
 def forward_kinematics(M_S: np.ndarray, M, q, frame='space'):
     nRows, nCols = M_S.shape
     T = np.eye(4)
-
     for i in range(nCols):
         T = T @ twist2Trans(M_S[:, i], q[i])
     if frame == 'space':
         T = T @ M
     elif frame == 'body':
         T = M @ T
-
     return T
 
 
@@ -129,54 +126,3 @@ def jacobian_body(M_S: np.ndarray, M, q):
     T = forward_kinematics(M_S, M, q, 'space')
     J_b = adjointMatrix(np.linalg.inv(T)) @ J_s
     return J_b
-
-
-'''
-Mat_S_space_camera = np.vstack((Sw, Sv))
-Mat_M_camera = np.array([[0, 1, 0, 0],
-                         [-1, 0, 0, 0.006375 - 0.005375 - 0.06],
-                         [0, 0, 1, 0.15643 + 0.12838 + 0.41 + 0.20843 + 2 * 0.10593 + 0.05],
-                         [0, 0, 0, 1]])
-Mat_S_body_camera = jacobian.adjointMatrix(np.linalg.inv(Mat_M_camera)) @ Mat_S_space_camera
-
-# ==== tool ====
-
-Sw = np.array([[0.0, 0, -1],
-               [0, 1, 0],
-               [0, -1, 0],
-               [0, 0, -1],
-               [0, -1, 0],
-               [0, 0, -1]]).T
-
-P = np.array([[0, 0, 0],
-              [0, 0, 0.12838 + 0.15643],
-              [0, 0, 0.12838 + 0.15643 + 0.41],
-              [0, 0.006375 - 0.005375, 0],
-              [0, 0, 0.12838 + 0.15643 + 0.41 + 0.20843 + 0.10593],
-              [0, 0.006375 - 0.005375, 0]]).T
-
-P = np.array([[0, -0.5, 0],
-              [0, 0, 0.12838 + 0.15643],
-              [0, 0, 0.12838 + 0.15643 + 0.41],
-              [0, 0.006375 - 0.005375 - 0.5, 0],
-              [0, 0, 0.12838 + 0.15643 + 0.41 + 0.20843 + 0.10593],
-              [0, 0.006375 - 0.005375 - 0.5, 0]]).T
-
-Sv = np.zeros((3, 6))
-
-for i in range(6):
-    ss = jacobian.skewSymmetric(Sw[:, i])
-    Sv[:, i] = -ss @ P[:, i]
-
-Mat_S_space_tool = np.vstack((Sw, Sv))
-Mat_M_tool = np.array([[-1, 0, 0, 0],
-                       [0, -1, 0, 0.006375 - 0.005375],
-                       [0, 0, 1, 0.15643 + 0.12838 + 0.41 + 0.20843 + 2 * 0.10593 + 0.0615 + 0.12],
-                       [0, 0, 0, 1]])
-
-Mat_M_tool = np.array([[-1, 0, 0, 0],
-                       [0, -1, 0, 0.006375 - 0.005375 - 0.5],
-                       [0, 0, 1, 0.15643 + 0.12838 + 0.41 + 0.20843 + 2 * 0.10593 + 0.0615 + 0.12],
-                       [0, 0, 0, 1]])
-Mat_S_body_tool = jacobian.adjointMatrix(np.linalg.inv(Mat_M_tool)) @ Mat_S_space_tool
-'''

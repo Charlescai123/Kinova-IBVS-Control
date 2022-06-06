@@ -9,15 +9,21 @@ using UnityEngine;
 ///     for robotic 2F-85. But others can also be used
 ///     with minor modification.
 /// </summary>
+/// 
+
+public enum GripperStatus { Open, Close };
+
 public class GripperController : MonoBehaviour
 {
     public ArticulationBody[] leftFingerChain;
     public ArticulationBody[] rightFingerChain;
+    public GripperStatus gripperStatus;
     public float closeValue = 48f;
     public float openValue = 0f;
 
     void Start()
     {
+        gripperStatus = GripperStatus.Open;
     }
 
     public void SetGrippers(float closeValue)
@@ -40,11 +46,13 @@ public class GripperController : MonoBehaviour
     public void CloseGrippers()
     {
         SetGrippers(closeValue); // Deg
+        gripperStatus = GripperStatus.Close;
     }
 
     public void OpenGrippers()
     {
         SetGrippers(openValue); // Deg
+        gripperStatus = GripperStatus.Open;
     }
 
     void SetTarget(ArticulationBody joint, float target)

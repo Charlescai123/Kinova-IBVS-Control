@@ -51,15 +51,14 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
+  CameraParam.msg
   PointOnImg.msg
-  # Message2.msg
 )
 
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
   OptimIBVS.srv
-  # Service2.srv
 )
 
 ## Generate actions in the 'action' folder

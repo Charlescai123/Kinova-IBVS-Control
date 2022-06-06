@@ -3,6 +3,7 @@ import threading
 
 import rospy
 import numpy as np
+import interaction_matrix as im
 import matplotlib.pyplot as plt
 import time
 
@@ -12,18 +13,36 @@ from optimization import *
 from ibvs_control.srv import OptimIBVS, OptimIBVSResponse, OptimIBVSRequest
 from std_msgs.msg import Float64
 
+'''
+Reference image point settings
+'''
+
+Ref_pt = np.array([1691.0, 302.0])
+Ref_pg = np.array([854.0, 1681.0])
+Ref_po = np.array([1621.2, 989.3])
+
+# global RESOLUTION
+global Ref_center
+'''
+Camera Resolution
+'''
+
+# RESOLUTION = np.array([640, 480])
+RESOLUTION = np.array([2064, 2096])
+
 
 class BackendNode:
     def __init__(self) -> None:
         rospy.init_node('backend_ros_node')
-        self.serv_states = rospy.Service('optim_ibvs', OptimIBVS, self.service_callback)
-        self.optimizer = StateMachineOptimizer()
         self.state = 'Ss'
         self.total_time = [time.process_time()]
         self.plot_goal1 = [0]
         self.plot_goal2 = [0]
         self.plot_goal3 = [0]
         self.plot_goal4 = [0]
+        self.serv_states = rospy.Service('optim_ibvs', OptimIBVS, self.service_callback)
+        self.optimizer = StateMachineOptimizer(Ref_pt, Ref_pg, Ref_po, RESOLUTION, DH_CAMERA,
+                                               DH_CAMERA_JOINT, Q_LIMIT, DQ_LIMIT)
 
         # t = threading.Thread(target=self.plot_evaluation, name='LoopThread')
         # t.start()
@@ -56,6 +75,18 @@ class BackendNode:
         # continue
 
     def service_callback(self, req: OptimIBVSRequest):
+        # RESOLUTION = [req.cam_param.width, req.cam_param.height]  # Resolution
+        # print("ASDasdjkasldjaslkdjasldkas:")
+        print("Resolution:", RESOLUTION)
+
+        # Interaction Matrix
+        # im.fx, im.fy = req.cam_param.fx.data, req.cam_param.fy.data
+        # im.cx, im.cy = req.cam_param.cx.data, req.cam_param.cy.data
+        print("Camera Param fx:", im.fx)
+        print("Camera Param fy:", im.fy)
+        print("Camera Param cx:", im.cx)
+        print("Camera Param cy:", im.cy)
+
         qm = np.asarray([i.data for i in req.qm], dtype=np.float64)
         dqm = np.asarray([i.data for i in req.dqm], dtype=np.float64)
         qc = np.asarray([i.data for i in req.qc], dtype=np.float64)

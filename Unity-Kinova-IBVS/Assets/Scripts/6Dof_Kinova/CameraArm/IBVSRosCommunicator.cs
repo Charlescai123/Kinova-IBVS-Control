@@ -18,11 +18,13 @@ public class IBVSRosCommunicator : MonoBehaviour
     private int numJoint = 6;
     public GameObject MAJointRoot;
     public GameObject CAJointRoot;
-    public Kinova6DofController CAController;
     private ArticulationBody[] MAJointArtiBodies;
     private ArticulationBody[] CAJointArtiBodies;
+    [HideInInspector] 
+    public Kinova6DofController CAController;
 
     // Camera Captor
+    [HideInInspector]
     public CameraCaptor camCaptor;
 
     // ROS Connector
@@ -31,7 +33,6 @@ public class IBVSRosCommunicator : MonoBehaviour
     // ROS Variables
     private bool ROSOnFlag = false;
     private bool ROSReceivedFlag = false;
-    private bool StateOFlag = false;
 
     void Start()
     {
@@ -61,14 +62,10 @@ public class IBVSRosCommunicator : MonoBehaviour
             ROSOnFlag = false;
             CAController.StopAllJoint(CAJointArtiBodies);
         }
+        // Press P to publish ROS msg
         if (Input.GetKeyDown(KeyCode.P))
         {
             ROSOnFlag ^= true;
-        }
-        // Send State O Flag
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            StateOFlag ^= true;
         }
 
         if (ROSOnFlag)
@@ -87,6 +84,9 @@ public class IBVSRosCommunicator : MonoBehaviour
 
         var request = new OptimIBVSRequest();
 
+        // Camera Parameters
+        request.cam_param = GetCamParam(camCaptor.VisualServoCam);
+
         // Position and Velocity of Camera Arm and Manipulation Arm joints
         request.qc = GetJointConfiguration(CAJointArtiBodies);
         request.qm = GetJointConfiguration(MAJointArtiBodies);
@@ -102,19 +102,7 @@ public class IBVSRosCommunicator : MonoBehaviour
         request.pg_seg = GetImgSegmentInfo(camCaptor.goal.transform);    // Goal Segment
 
         // Obstacle Area
-        //request.area_o = GetQuadAreaSize(camCaptor.obsCornerPoints);
-        Float64Msg wtf = new Float64Msg();
-        if (StateOFlag)
-        {
-            wtf.data = 1;
-            request.area_o = wtf;
-        }
-        else
-        {
-            wtf.data = 0;
-            request.area_o = wtf;
-        }
-        Debug.Log("State O Flag is:" + wtf.data);
+        request.area_o = GetQuadAreaSize(camCaptor.obsCornerPoints);
 
         // Goal Area
         request.area_g = GetQuadAreaSize(camCaptor.goalCornerPoints);
@@ -125,7 +113,7 @@ public class IBVSRosCommunicator : MonoBehaviour
             m_Ros.SendServiceMessage<OptimIBVSResponse>(RosServiceName, request, ServiceResponse);
             ROSReceivedFlag = true;
         }
-        Debug.Log("I'm now publishing!");
+        Debug.Log("I'm now publishing ROS msg!");
     }
 
     // Process received IVBS Response
@@ -140,7 +128,34 @@ public class IBVSRosCommunicator : MonoBehaviour
         ROSReceivedFlag = false;
     }
 
-    // Get Joint Configuration
+    /// <summary>
+    /// Get Unity Camera Resolution (Width x Height)
+    /// </summary>
+    private CameraParamMsg GetCamParam(Camera cam)
+    {
+        CameraParamMsg camParam = new CameraParamMsg();
+
+        // Camera Resolution
+        camParam.width.data = cam.pixelWidth;
+        camParam.height.data = cam.pixelHeight;
+        Debug.Log("Resolution:" + camParam.width.data + " " + camParam.height.data);
+
+        // fx, fy, cx, cy
+        camParam.fx.data = cam.focalLength / cam.sensorSize.x;
+        camParam.fy.data = cam.focalLength / cam.sensorSize.y;
+        camParam.cx.data = 0.5 + cam.lensShift.x / cam.sensorSize.x;
+        camParam.cy.data = 0.5 + cam.lensShift.y / cam.sensorSize.y;
+        //Debug.Log("Camera Param fx:" + camParam.fx.data);
+        //Debug.Log("Camera Param fy:" + camParam.fy.data);
+        //Debug.Log("Camera Param cx:" + camParam.cx.data);
+        //Debug.Log("Camera Param cy:" + camParam.cy.data);
+
+        return camParam;
+    }
+
+    /// <summary>
+    /// Get Joint Configuration
+    /// </summary>
     private Float64Msg[] GetJointConfiguration(ArticulationBody[] articulationbody)
     {
         Float64Msg[] msg = new Float64Msg[articulationbody.Length];

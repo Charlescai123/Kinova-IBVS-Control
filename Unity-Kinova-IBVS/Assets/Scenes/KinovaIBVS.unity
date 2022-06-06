@@ -444,7 +444,7 @@ GameObject:
   - component: {fileID: 35526266}
   - component: {fileID: 35526265}
   m_Layer: 0
-  m_Name: SphericalWrist1_Link
+  m_Name: MA/SphericalWrist1_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1160,57 +1160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9090ae501ff9cd459bec5271d40249c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &107811338
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 107811339}
-  - component: {fileID: 107811340}
-  m_Layer: 0
-  m_Name: Kinova Teleoperator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &107811339
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107811338}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1186482242}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &107811340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 107811338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecd50af2df76b5f4ebd75efe6f5158fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ManipulatorGripper: {fileID: 395685854}
-  TeleoperationOn: 0
-  IsGripperOpen: 1
-  jointRoot: {fileID: 407533704}
-  endEffector: {fileID: 1688995186}
-  MAJointController: {fileID: 395685852}
-  iK: {fileID: 1879384647}
-  highLightColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &119660147
 GameObject:
   m_ObjectHideFlags: 8
@@ -1838,7 +1787,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 527583813}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &258216184
 PrefabInstance:
@@ -2595,7 +2544,7 @@ GameObject:
   - component: {fileID: 361191090}
   - component: {fileID: 361191089}
   m_Layer: 0
-  m_Name: SphericalWrist1_Link
+  m_Name: CA/SphericalWrist1_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2726,7 +2675,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 395685855}
-  - component: {fileID: 395685853}
   - component: {fileID: 395685852}
   - component: {fileID: 395685854}
   m_Layer: 0
@@ -2769,25 +2717,6 @@ MonoBehaviour:
   stiffness: 10000
   damping: 10000
   forceLimit: 1000
---- !u!114 &395685853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395685851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 026a27351308da94b9d065ca081ef2b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jointRoot: {fileID: 407533704}
-  endEffector: {fileID: 1688995186}
-  jointController: {fileID: 395685852}
-  iK: {fileID: 1879384647}
-  jointSpeed: 0.5
-  linearSpeed: 0.2
-  angularSpeed: 0.15
 --- !u!114 &395685854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2808,6 +2737,7 @@ MonoBehaviour:
   - {fileID: 2123171722}
   - {fileID: 1591278637}
   - {fileID: 2075361543}
+  gripperStatus: 0
   closeValue: 48
   openValue: 0
 --- !u!4 &395685855
@@ -2926,7 +2856,7 @@ GameObject:
   - component: {fileID: 407533706}
   - component: {fileID: 407533705}
   m_Layer: 0
-  m_Name: Base_Link
+  m_Name: MA/Base_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3365,7 +3295,7 @@ GameObject:
   - component: {fileID: 491833326}
   - component: {fileID: 491833325}
   m_Layer: 0
-  m_Name: Bicep_Link
+  m_Name: MA/Bicep_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3545,7 +3475,7 @@ GameObject:
   - component: {fileID: 524865532}
   - component: {fileID: 524865531}
   m_Layer: 0
-  m_Name: ForeArm_Link
+  m_Name: MA/ForeArm_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3739,6 +3669,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1270063609}
   - {fileID: 236234972}
   - {fileID: 1358409493}
   m_Father: {fileID: 1235214514}
@@ -4137,7 +4068,7 @@ GameObject:
   - component: {fileID: 575138649}
   - component: {fileID: 575138648}
   m_Layer: 0
-  m_Name: SphericalWrist2_Link
+  m_Name: MA/SphericalWrist2_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5277,7 +5208,7 @@ GameObject:
   - component: {fileID: 746004245}
   - component: {fileID: 746004244}
   m_Layer: 0
-  m_Name: Shoulder_Link
+  m_Name: CA/Shoulder_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5827,7 +5758,7 @@ GameObject:
   - component: {fileID: 838883649}
   - component: {fileID: 838883648}
   m_Layer: 0
-  m_Name: ForeArm_Link
+  m_Name: CA/ForeArm_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6484,7 +6415,7 @@ GameObject:
   - component: {fileID: 910642802}
   - component: {fileID: 910642801}
   m_Layer: 0
-  m_Name: Shoulder_Link
+  m_Name: MA/Shoulder_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7235,7 +7166,7 @@ GameObject:
   - component: {fileID: 980150785}
   - component: {fileID: 980150784}
   m_Layer: 0
-  m_Name: Bicep_Link
+  m_Name: CA/Bicep_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8171,7 +8102,7 @@ GameObject:
   - component: {fileID: 1107636706}
   - component: {fileID: 1107636705}
   m_Layer: 0
-  m_Name: Base_Link
+  m_Name: CA/Base_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8790,7 +8721,7 @@ Transform:
   m_Children:
   - {fileID: 395685855}
   - {fileID: 1879384649}
-  - {fileID: 107811339}
+  - {fileID: 1332807035}
   m_Father: {fileID: 903553536}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8864,7 +8795,7 @@ GameObject:
   - component: {fileID: 1193711936}
   - component: {fileID: 1193711935}
   m_Layer: 8
-  m_Name: RightArm_EndEffector_Link
+  m_Name: MA/RightArm_EndEffector_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9306,6 +9237,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3763610340402235809, guid: 0f19bc5449a281041bda6f2d3462be9f, type: 3}
   m_PrefabInstance: {fileID: 1236334145}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1270063608
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1270063609}
+  - component: {fileID: 1270063610}
+  m_Layer: 0
+  m_Name: ROS
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1270063609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270063608}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 527583813}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1270063610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270063608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da4aaf2ffbecb0b449199fc437383ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RosServiceName: optim_ibvs
+  ROSUpdateRate: 20
+  MAJointRoot: {fileID: 407533704}
+  CAJointRoot: {fileID: 1107636703}
+  CAController: {fileID: 236234971}
+  camCaptor: {fileID: 1358409495}
 --- !u!1 &1298487557
 GameObject:
   m_ObjectHideFlags: 0
@@ -9364,7 +9344,7 @@ GameObject:
   - component: {fileID: 1305098488}
   - component: {fileID: 1305098487}
   m_Layer: 0
-  m_Name: Bracelet_Link
+  m_Name: MA/Bracelet_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9655,6 +9635,59 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 6e8e431a6e327990f8e7f083e8e3785e, type: 2}
+--- !u!1 &1332807034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1332807035}
+  - component: {fileID: 1332807036}
+  m_Layer: 0
+  m_Name: Keyboard Control
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1332807035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332807034}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0.02398312, y: 0.46706206, z: -0.17303145}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1186482242}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1332807036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332807034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 026a27351308da94b9d065ca081ef2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlMode: 0
+  controlType: 0
+  jointRoot: {fileID: 407533704}
+  endEffector: {fileID: 1688995186}
+  gripperController: {fileID: 395685854}
+  jointController: {fileID: 395685852}
+  iK: {fileID: 1879384647}
+  jointSpeed: 0.002
+  linearSpeed: 0.04
+  angularSpeed: 0.15
 --- !u!1001 &1335151278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9858,7 +9891,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1358409493}
   - component: {fileID: 1358409495}
-  - component: {fileID: 1358409494}
   m_Layer: 0
   m_Name: Camera Capture
   m_TagString: Untagged
@@ -9878,26 +9910,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 527583813}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1358409494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1358409492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da4aaf2ffbecb0b449199fc437383ed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RosServiceName: optim_ibvs
-  ROSUpdateRate: 20
-  MAJointRoot: {fileID: 407533704}
-  CAJointRoot: {fileID: 1107636703}
-  CAController: {fileID: 236234971}
-  camCaptor: {fileID: 1358409495}
 --- !u!114 &1358409495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9910,7 +9924,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcd3e85f857e4aa439bbebd051ab9389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateRate: 20
   goal: {fileID: 1848988837}
   TCP: {fileID: 1688995186}
   obstacle: {fileID: 73029238}
@@ -10603,7 +10616,7 @@ GameObject:
   - component: {fileID: 1506230425}
   - component: {fileID: 1506230424}
   m_Layer: 0
-  m_Name: Bracelet_Link
+  m_Name: CA/Bracelet_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10738,7 +10751,7 @@ GameObject:
   - component: {fileID: 1510432609}
   - component: {fileID: 1510432608}
   m_Layer: 0
-  m_Name: Camera View
+  m_Name: Visual Serving Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10780,7 +10793,7 @@ Camera:
   m_projectionMatrixMode: 2
   m_GateFitMode: 0
   m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
+  m_SensorSize: {x: 36, y: 27}
   m_LensShift: {x: 0, y: 0}
   m_FocalLength: 20
   m_NormalizedViewPortRect:
@@ -10791,7 +10804,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 61.927517
+  field of view: 68.038704
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -12559,7 +12572,7 @@ GameObject:
   - component: {fileID: 1716829699}
   - component: {fileID: 1716829698}
   m_Layer: 0
-  m_Name: SphericalWrist2_Link
+  m_Name: CA/SphericalWrist2_Link
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13647,6 +13660,7 @@ GameObject:
   - component: {fileID: 1879384649}
   - component: {fileID: 1879384647}
   - component: {fileID: 1879384648}
+  - component: {fileID: 1879384650}
   m_Layer: 0
   m_Name: Kinematic Solver
   m_TagString: Untagged
@@ -13666,9 +13680,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0f140733acace34587fc1511269757b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fK: {fileID: 1879384648}
   numJoint: 6
-  maxItreration: 20
+  fK: {fileID: 1879384648}
+  model: {fileID: 1879384650}
+  controller: {fileID: 395685852}
+  NR_Iterations: 1000
+  CCD_Itreration: 20
   tolerancePosition: 0.01
   toleranceRotation: 0.0872665
 --- !u!114 &1879384648
@@ -13684,6 +13701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numJoint: 6
+  model: {fileID: 1879384650}
   alpha:
   - 3.1415927
   - 1.5707964
@@ -13730,6 +13748,23 @@ MonoBehaviour:
   - 0
   - 2.1
   - 0
+  M:
+    e00: 0
+    e01: 0
+    e02: 0
+    e03: 0
+    e10: 0
+    e11: 0
+    e12: 0
+    e13: 0
+    e20: 0
+    e21: 0
+    e22: 0
+    e23: 0
+    e30: 0
+    e31: 0
+    e32: 0
+    e33: 0
 --- !u!4 &1879384649
 Transform:
   m_ObjectHideFlags: 0
@@ -13744,6 +13779,18 @@ Transform:
   m_Father: {fileID: 1186482242}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1879384650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879384646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93f323d0650273946a018bc14e99f408, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1892308107
 PrefabInstance:
   m_ObjectHideFlags: 0

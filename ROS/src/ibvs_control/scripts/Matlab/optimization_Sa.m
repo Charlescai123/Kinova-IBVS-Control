@@ -1,13 +1,14 @@
-function res = optimization_Sa(Pcg, Pct, Jcc, qc, dqc, pg, pt)
-    Ref_pt = [1691.0, 302.0]';
-    Ref_pg = [854.0, 1681.0]';
+function res = optimization_Sa(resolution, Ref_pt, Ref_pg, q_limit, dq_limit, Pcg, Pct, Jcc, qc, dqc, pg, pt)
+    % Ref_pt = [1691.0, 302.0]';
+    % Ref_pg = [854.0, 1681.0]';
+    Ref_pt = Ref_pt';
+    Ref_pg = Ref_pg';
+
     qc = qc';
     dqc = dqc';
     pg = pg';
     pt = pt';
 
-    q_limit = [-pi, -2.41, -2.66, -pi, -2.23, -pi;
-                pi, 2.41, 2.66, pi, 2.23, pi]';
     %%
     dq0 = optimvar('dq0');
     dq1 = optimvar('dq1');
@@ -30,13 +31,14 @@ function res = optimization_Sa(Pcg, Pct, Jcc, qc, dqc, pg, pt)
 
     prob = optimproblem;
     prob.Objective = e1(1)+e1(2) + e2(1)+e2(2) + e3;
-    prob.Constraints.cons1 = dq <= [1.3963 1.3963 1.3963 1.2218 1.2218 1.2218]';
-    prob.Constraints.cons2 = dq >= [-1.3963 -1.3963 -1.3963 -1.2218 -1.2218 -1.2218]';
 
-    prob.Constraints.cons3 = qc + dq * 0.05 <= q_limit(:, 2);
-    prob.Constraints.cons4 = qc + dq * 0.05 >= q_limit(:, 1);
+    prob.Constraints.cons1 = dq >= dq_limit(:, 1);
+    prob.Constraints.cons2 = dq <= dq_limit(:, 2);
+
+    prob.Constraints.cons3 = qc + dq * 0.05 >= q_limit(:, 1);
+    prob.Constraints.cons4 = qc + dq * 0.05 <= q_limit(:, 2);
 %
-    prob.Constraints.cons5 = pg_next <= [2064.0 2096.0]';
+    prob.Constraints.cons5 = pg_next <= resolution';
     prob.Constraints.cons6 = pg_next >= [0.0 0.0]';
 
     x0.dq0 = dqc(1);

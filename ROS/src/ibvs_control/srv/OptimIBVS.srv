@@ -1,17 +1,19 @@
-std_msgs/Float64[] qc               # camera-arm joint position (array of length 6)
-std_msgs/Float64[] dqc              # camera-arm joint velocity ((array of length 6)
-std_msgs/Float64[] qm               # manipulator-arm joint position (array of length 6)
-std_msgs/Float64[] dqm              # manipulator-arm joint velocity (array of length 6)
+CameraParam cam_param             # camera parameters
 
-PointOnImg pt                       # tool COM (center of mass)
-PointOnImg pg                       # goal COM (center of mass)
-PointOnImg po                       # occlusion COM (center of mass)
+std_msgs/Float64[] qc             # camera-arm joint position (array of length 6)
+std_msgs/Float64[] dqc            # camera-arm joint velocity (array of length 6)
+std_msgs/Float64[] qm             # manipulator-arm joint position (array of length 6)
+std_msgs/Float64[] dqm            # manipulator-arm joint velocity (array of length 6)
 
-std_msgs/Float64 area_g             # area of goal on image
-std_msgs/Float64 area_o             # area of obstacle on image
+PointOnImg pt                     # tool COM (center of mass)
+PointOnImg pg                     # goal COM (center of mass)
+PointOnImg po                     # occlusion COM (center of mass)
+
+std_msgs/Float64 area_g           # area of goal on image
+std_msgs/Float64 area_o           # area of obstacle on image
 
 PointOnImg[] pg_seg               # 4 points of goal segmentation
 PointOnImg[] po_seg               # 4 points of obstacle segmentation
 
 ---
-std_msgs/Float64[] dqc_next         # camera-arm joint target velocity (array of length 6)
+std_msgs/Float64[] dqc_next       # camera-arm joint target velocity (array of length 6)

@@ -1,15 +1,18 @@
-function res = optimization_So(Pct, Pcg, Pco, Jcc, qc, dqc, pt, pg, po, Pco_vertices, pov)
-    Ref_pg = [654.0, 1881.0]';
-    Ref_pt = [1691.0, 302.0]';
-    Ref_po = [1487.0, 1387.0]';%1621.2097168, 989.36187744
+function res = optimization_So(resolution, Ref_pt, Ref_pg, Ref_po, q_limit, dq_limit, Pct, Pcg, Pco, Jcc, qc, dqc, pt, pg, po, Pco_vertices, pov)
+    %Ref_pg = [654.0, 1881.0]';
+    %Ref_pt = [1691.0, 302.0]';
+    %Ref_po = [1487.0, 1387.0]';
+    Ref_pt = Ref_pt';
+    Ref_pg = Ref_pg';
+    Ref_po = Ref_po';
+
+    %1621.2097168, 989.36187744
     qc = qc';
     dqc = dqc';
     pg = pg';
     po = po';
     pt = pt';
 
-    q_limit = [-pi, -2.41, -2.66, -pi, -2.23, -pi;
-                pi, 2.41, 2.66, pi, 2.23, pi]';
     %%
     dq0 = optimvar('dq0');
     dq1 = optimvar('dq1');
@@ -60,13 +63,14 @@ function res = optimization_So(Pct, Pcg, Pco, Jcc, qc, dqc, pt, pg, po, Pco_vert
 
     prob = optimproblem;
     prob.Objective =  e6(1) + e6(2) + e3(1) + e3(2) + e5;%+ 1000*e8 e7(1) + e7(2) +  + e50.01*e1(1) + 0.01*e1(2) + 0.01*e2(1) + 0.01*e2(2) + e5 0.001*+ e4 0.0001*10000*
-    prob.Constraints.cons1 = dq <= [1.3963 1.3963 1.3963 1.2218 1.2218 1.2218]';
-    prob.Constraints.cons2 = dq >= [-1.3963 -1.3963 -1.3963 -1.2218 -1.2218 -1.2218]';
 
-    prob.Constraints.cons3 = qc + dq * 0.05 <= q_limit(:, 2);
-    prob.Constraints.cons4 = qc + dq * 0.05 >= q_limit(:, 1);
-%
-    prob.Constraints.cons5 = pg_next <= [2064.0 2096.0]';
+    prob.Constraints.cons1 = dq >= dq_limit(:, 1);
+    prob.Constraints.cons2 = dq <= dq_limit(:, 2);
+
+    prob.Constraints.cons3 = qc + dq * 0.05 >= q_limit(:, 1);
+    prob.Constraints.cons4 = qc + dq * 0.05 <= q_limit(:, 2);
+
+    prob.Constraints.cons5 = pg_next <= resolution';
     prob.Constraints.cons6 = pg_next >= [0.0 0.0]';
 
     x0.dq0 = dqc(1);
