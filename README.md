@@ -19,8 +19,7 @@ paper [Occlusion-Free Visual Servoing for the Shared Autonomy Teleoperation of D
 
 We carefully design the scenario in Unity using
 two [Kinova-Gen3-6-Dof](https://www.kinovarobotics.com/product/gen3-robots) robot arms
-with one equipped the [Robotiq 2F-85](https://robotiq.com/products/2f85-140-adaptive-robot-gripper) gripper naming **
-Manipulator Arm** while another attached an eye-in-hand camera naming **Camera Arm**
+with one equipped the [Robotiq 2F-85](https://robotiq.com/products/2f85-140-adaptive-robot-gripper) gripper naming **Manipulator Arm** while another attached an eye-in-hand camera naming **Camera Arm**
 
 The model and DH parameters are described as follows:
 
